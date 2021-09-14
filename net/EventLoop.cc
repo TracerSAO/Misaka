@@ -56,7 +56,7 @@ EventLoop::EventLoop():
 {
     if (t_loopInthisThread)
     {
-        fprintf(stderr, "Anothre EventLoop exists in this thread!\n");
+        fprintf(stderr, "Another EventLoop exists in this thread!\n");
         exit(EXIT_FAILURE);
     }
     else

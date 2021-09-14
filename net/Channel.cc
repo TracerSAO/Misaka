@@ -9,9 +9,9 @@
 using namespace Misaka;
 using namespace net;
 
-const int Channel::kNoneEvent = POLLNVAL;
-const int Channel::kReadEvent = POLLIN | POLLPRI;
-const int Channel::kWriteEvent = POLLOUT;
+const int Channel::kNoneEvent = EPOLLNVAL;
+const int Channel::kReadEvent = EPOLLIN | EPOLLPRI;
+const int Channel::kWriteEvent = EPOLLOUT;
 
 Channel::Channel(EventLoop* loop, int fd):
     loop_(loop),
@@ -77,24 +77,25 @@ void Channel::handleEventWithGuard(Timestamp receiveTime)
     LOG_TRACE << loop_ << " self: " << this;
     eventHandling_ = true;
 
-    if ((revent_ & POLLHUP) && !(revent_ & POLLIN))
+    if ((revent_ & EPOLLHUP) && !(revent_ & EPOLLIN))
     {
-        LOG_WARN << "fd = " << fd_ << "Channel::handleEvnet() POLLHUP";
+        LOG_WARN << "fd = " << fd_ << "Channel::handleEven() POLLHUP";
         if (closeCallback_) closeCallback_();
     }
 
-    if (revent_ & POLLNVAL)
-    {
-        LOG_WARN << "fd = " << fd_ << "Channel::handleEvent() POLLINVAL";
-    }
+    // 我们不考虑 poll/epoll 的切换使用 —— 舍弃 POLL 系列特有标志
+    // if (revent_ & EPOLLNVAL)
+    // {
+    //     LOG_WARN << "fd = " << fd_ << "Channel::handleEvent() POLLINVAL";
+    // }
 
-    if (revent_ & (POLLERR | POLLNVAL)) {
+    if (revent_ & EPOLLERR) {
         if (errorCallback_) errorCallback_();
     }
-    if (revent_ & (POLLIN | POLLPRI | POLLRDHUP)) {
+    if (revent_ & (EPOLLIN | EPOLLPRI | EPOLLRDHUP)) {
         if (readCallback_) readCallback_(receiveTime);
     }
-    if (revent_ & POLLOUT) {
+    if (revent_ & EPOLLOUT) {
         if (writeCallback_) writeCallback_();
     }
 
