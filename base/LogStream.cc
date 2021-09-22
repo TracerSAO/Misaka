@@ -109,7 +109,7 @@ void LogStream::staticCheck()
 }
 
 template <typename T>
-void LogStream::formatInteget(T val)
+void LogStream::formatInteger(T val)
 {
 	if (buffer_.avail() >= kMaxNumbericSize)
 	{
@@ -130,32 +130,32 @@ LogStream& LogStream::operator<<(unsigned short val)
 
 LogStream& LogStream::operator<<(int val)
 {
-	formatInteget(val);
+	formatInteger(val);
 	return *this;
 }
 LogStream& LogStream::operator<<(unsigned int val)
 {
-	formatInteget(val);
+	formatInteger(val);
 	return *this;
 }
 LogStream& LogStream::operator<<(long val)
 {
-	formatInteget(val);
+	formatInteger(val);
 	return *this;
 }
 LogStream& LogStream::operator<<(unsigned long val)
 {
-	formatInteget(val);
+	formatInteger(val);
 	return *this;
 }
 LogStream& LogStream::operator<<(long long val)
 {
-	formatInteget(val);
+	formatInteger(val);
 	return *this;
 }
 LogStream& LogStream::operator<<(unsigned long long val)
 {
-	formatInteget(val);
+	formatInteger(val);
 	return *this;
 }
 

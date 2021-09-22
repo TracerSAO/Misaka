@@ -71,7 +71,7 @@ private:
 	char* cur_;
 };
 
-}	// namespace detial
+}	// namespace detail
 
 class LogStream : public noncopyable
 {
@@ -145,7 +145,7 @@ private:
 	void staticCheck();
 
 	template <typename T>
-	void formatInteget(T);
+	void formatInteger(T);
 
 private:
 	Buffer buffer_;
@@ -166,7 +166,7 @@ private:
 	int length_;
 };
 
-// 不知道是不是 muduo 的疏忽，logging.cc 中并没有服用这个接口，而是使用新的接口
+// 不知道是不是 muduo 的疏忽，logging.cc 中并没有复用这个接口，而是使用新的接口
 // LogStream& operator<<(Logstream& os, const T& val);
 // 个人认为两者并没有什么太大区别，相反，前者还会多一次 ctor
 // 对外提供一个用户可以直接将 class Fmt 输出到 LogStream 的接口

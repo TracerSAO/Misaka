@@ -3,7 +3,7 @@
 #include <cerrno>
 #include <cstdint>
 
-bool Misaka::Condition::watiForSeconds(double seconds)
+bool Misaka::Condition::waitForSeconds(double seconds)
 {
 	struct timespec abstime;
 	::clock_gettime(CLOCK_REALTIME, &abstime);

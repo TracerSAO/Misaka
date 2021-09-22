@@ -40,7 +40,7 @@ const char* LogLevelName[static_cast<int>(Logger::LogLevel::NUM_LOG_LEVELS)] =
 	"FATAL "
 };
 
-// 我确定不认为，class T 可以在编译器计算出 string 长度
+// 我确实不认为，class T 可以在编译器计算出 string 长度
 // 但我认为 class T 是外部向 LOGSTREAM 输入数据的一个良好接口
 class T
 {
@@ -72,10 +72,10 @@ void defaultOutput(const char* msg, int len)
 {
 	size_t n = ::fwrite(msg, 1, len, stdout);
 	// muduo 建议在这里对结果进行检查，
-	// 但问题来了，如果检查出错误，那这个错误忘哪里输出呢？？
+	// 但问题来了，如果检查出错误，那这个错误往哪里输出呢？？
 	// 是否中断程序并输出错误结果，还是？只输出错误结果程序不终止呢？
 	// 暂时不检查
-	(void)n;
+	(void)n;	// 因为在编译时，开启了 gcc 未使用变量报错参数，所以 (void) 修饰，表已被使用
 }
 
 void defaultFlush()

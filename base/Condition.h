@@ -24,7 +24,7 @@ public:
 		MutexLock::UnassignedGuard UG(mutex_);
 		pthread_cond_wait(&pcond_, mutex_.getMutexPointer());
 	}
-	bool watiForSeconds(double seconds);
+	bool waitForSeconds(double seconds);
 
 	void notify()
 	{

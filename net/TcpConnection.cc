@@ -285,6 +285,7 @@ void TcpConnection::connectionDestroyed()
 	channel_->remove();
 
 	// PS: 到这里，就是到了 TcpConnection 生命的尽头，除非 usr 持有当前的 connection
+	// PS: 到这里，如果是 handleRead() 触发 connectionClose，则还有 Channel 持有 TCPConnection，是为了保证生命周期
 }
 
 void TcpConnection::handleRead(Timestamp receiveTime)

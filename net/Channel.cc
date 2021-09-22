@@ -9,7 +9,7 @@
 using namespace Misaka;
 using namespace net;
 
-const int Channel::kNoneEvent = EPOLLNVAL;
+const int Channel::kNoneEvent = POLLNVAL;
 const int Channel::kReadEvent = EPOLLIN | EPOLLPRI;
 const int Channel::kWriteEvent = EPOLLOUT;
 

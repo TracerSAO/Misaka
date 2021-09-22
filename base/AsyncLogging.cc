@@ -68,7 +68,7 @@ void AsyncLogging::threadFunc()
 			MutexLockGuard MG(mutex_);
 			if (buffers_.empty())
 			{
-				cond_.watiForSeconds(flushInterval_);
+				cond_.waitForSeconds(flushInterval_);
 			}
 			buffers_.push_back(std::move(currentBuffer_));
 			currentBuffer_ = std::move(nextBuffer1);
