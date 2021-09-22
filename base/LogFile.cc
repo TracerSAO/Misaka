@@ -24,7 +24,7 @@ LogFile::LogFile(const string& basename,
 {
 	assert(string::npos == basename_.find('/'));
 	rollFile();
-	// ³õÊ¼»¯ lastRoll_ lastFlush_ startOfPeriod_
+	// åˆå§‹åŒ– lastRoll_ lastFlush_ startOfPeriod_
 }
 
 LogFile::~LogFile() = default;
@@ -104,7 +104,7 @@ void LogFile::append_unlocked(const char* logline, int len)
 string LogFile::getLogFileName(const string& basename, time_t* now)
 {
 	// Logfilename format:
-	// [³ÌĞòÃû] . [year-month-day] - [hour-minute-second] . [hostname] . [pid_t] .log
+	// [ç¨‹åºå] . [year-month-day] - [hour-minute-second] . [hostname] . [pid_t] .log
 
 	string logfilenam;
 	logfilenam.reserve(basename.size() + 64);

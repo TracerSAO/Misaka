@@ -62,7 +62,7 @@ struct ThreadData
 		CurrentThread::t_threadName = name_.empty() ? "MisakaThread" : name_.c_str();
 		::prctl(PR_SET_NAME, CurrentThread::t_threadName);
 
-		func_();	// È±ÉÙÒì³£²¶»ñ£¬ÎªÊ²Ã´ÒªÔÚÕâÀïÌí¼ÓÒì³£²¶»ñ£¬Ôİ²»Çå³ş£¬muduo ÖĞÔÚÕâÒ»¿éÈ·ÊµÌá¹©ÁËÕâÑùµÄÒ»ÖÖ»úÖÆ
+		func_();	// ç¼ºå°‘å¼‚å¸¸æ•è·ï¼Œä¸ºä»€ä¹ˆè¦åœ¨è¿™é‡Œæ·»åŠ å¼‚å¸¸æ•è·ï¼Œæš‚ä¸æ¸…æ¥šï¼Œmuduo ä¸­åœ¨è¿™ä¸€å—ç¡®å®æä¾›äº†è¿™æ ·çš„ä¸€ç§æœºåˆ¶
 		CurrentThread::t_threadName = "finished";
 	}
 };
@@ -133,11 +133,11 @@ void Thread::start()
 	{
 		started_ = false;
 		delete data;
-		assert(true == started_);	// ÔŞÌæ LOG
+		assert(true == started_);	// èµæ›¿ LOG
 	}
 	else
 	{
-		latch_.wait();	// µÈ´ı thread ´´½¨Íê±Ï£¬²¢¿ªÊ¼Ö´ĞĞ threadFunc
+		latch_.wait();	// ç­‰å¾… thread åˆ›å»ºå®Œæ¯•ï¼Œå¹¶å¼€å§‹æ‰§è¡Œ threadFunc
 		assert(0 < tid_);
 	}
 

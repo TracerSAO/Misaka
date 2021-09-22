@@ -8,16 +8,16 @@
 namespace Misaka
 {
 
-__thread char t_errnobuf[512];	// »º´æ errno ¶ÔÓ¦µÄÒì³£ĞÅÏ¢
-__thread char t_time[64];		// »º´æµ±Ç°Ê±¿ÌµÄÊ±¼äĞÅÏ¢ - Î¢Ãë
-__thread time_t t_lastsecond;	// »º´æµ±Ç° 1 ÃëµÄÊ±¼ä´Á£¬ÒÔ¼°±ÜÃâÖØ¸´¼ÇÂ¼´Ë¿Ì 1 Ãë´óÓÚÎ¢Ãë²¿·ÖµÄÊ±¼ä´Á
+__thread char t_errnobuf[512];	// ç¼“å­˜ errno å¯¹åº”çš„å¼‚å¸¸ä¿¡æ¯
+__thread char t_time[64];		// ç¼“å­˜å½“å‰æ—¶åˆ»çš„æ—¶é—´ä¿¡æ¯ - å¾®ç§’
+__thread time_t t_lastsecond;	// ç¼“å­˜å½“å‰ 1 ç§’çš„æ—¶é—´æˆ³ï¼Œä»¥åŠé¿å…é‡å¤è®°å½•æ­¤åˆ» 1 ç§’å¤§äºå¾®ç§’éƒ¨åˆ†çš„æ—¶é—´æˆ³
 
 const char* strerror_tl(int savedErrno)
 {
 	return strerror_r(savedErrno, t_errnobuf, sizeof t_errnobuf);
 }
 
-// Îª Misaka ÍøÂç¿âÌá¹©ÀûÓÃµ±Ç°»úÆ÷»·¾³±äÁ¿ÉèÖÃ LOG Êä³ö¼¶±ğµÄ·½Ê½
+// ä¸º Misaka ç½‘ç»œåº“æä¾›åˆ©ç”¨å½“å‰æœºå™¨ç¯å¢ƒå˜é‡è®¾ç½® LOG è¾“å‡ºçº§åˆ«çš„æ–¹å¼
 Logger::LogLevel initLogLevel()
 {
 	if (::getenv("MISAKA_LOG_TRACE"))
@@ -40,8 +40,8 @@ const char* LogLevelName[static_cast<int>(Logger::LogLevel::NUM_LOG_LEVELS)] =
 	"FATAL "
 };
 
-// ÎÒÈ·Êµ²»ÈÏÎª£¬class T ¿ÉÒÔÔÚ±àÒëÆ÷¼ÆËã³ö string ³¤¶È
-// µ«ÎÒÈÏÎª class T ÊÇÍâ²¿Ïò LOGSTREAM ÊäÈëÊı¾İµÄÒ»¸öÁ¼ºÃ½Ó¿Ú
+// æˆ‘ç¡®å®ä¸è®¤ä¸ºï¼Œclass T å¯ä»¥åœ¨ç¼–è¯‘å™¨è®¡ç®—å‡º string é•¿åº¦
+// ä½†æˆ‘è®¤ä¸º class T æ˜¯å¤–éƒ¨å‘ LOGSTREAM è¾“å…¥æ•°æ®çš„ä¸€ä¸ªè‰¯å¥½æ¥å£
 class T
 {
 public:
@@ -71,19 +71,19 @@ inline LogStream& operator<<(LogStream& os, const Logger::SourceFile& file)
 void defaultOutput(const char* msg, int len)
 {
 	size_t n = ::fwrite(msg, 1, len, stdout);
-	// muduo ½¨ÒéÔÚÕâÀï¶Ô½á¹û½øĞĞ¼ì²é£¬
-	// µ«ÎÊÌâÀ´ÁË£¬Èç¹û¼ì²é³ö´íÎó£¬ÄÇÕâ¸ö´íÎóÍùÄÄÀïÊä³öÄØ£¿£¿
-	// ÊÇ·ñÖĞ¶Ï³ÌĞò²¢Êä³ö´íÎó½á¹û£¬»¹ÊÇ£¿Ö»Êä³ö´íÎó½á¹û³ÌĞò²»ÖÕÖ¹ÄØ£¿
-	// ÔİÊ±²»¼ì²é
-	(void)n;	// ÒòÎªÔÚ±àÒëÊ±£¬¿ªÆôÁË gcc Î´Ê¹ÓÃ±äÁ¿±¨´í²ÎÊı£¬ËùÒÔ (void) ĞŞÊÎ£¬±íÒÑ±»Ê¹ÓÃ
+	// muduo å»ºè®®åœ¨è¿™é‡Œå¯¹ç»“æœè¿›è¡Œæ£€æŸ¥ï¼Œ
+	// ä½†é—®é¢˜æ¥äº†ï¼Œå¦‚æœæ£€æŸ¥å‡ºé”™è¯¯ï¼Œé‚£è¿™ä¸ªé”™è¯¯å¾€å“ªé‡Œè¾“å‡ºå‘¢ï¼Ÿï¼Ÿ
+	// æ˜¯å¦ä¸­æ–­ç¨‹åºå¹¶è¾“å‡ºé”™è¯¯ç»“æœï¼Œè¿˜æ˜¯ï¼Ÿåªè¾“å‡ºé”™è¯¯ç»“æœç¨‹åºä¸ç»ˆæ­¢å‘¢ï¼Ÿ
+	// æš‚æ—¶ä¸æ£€æŸ¥
+	(void)n;	// å› ä¸ºåœ¨ç¼–è¯‘æ—¶ï¼Œå¼€å¯äº† gcc æœªä½¿ç”¨å˜é‡æŠ¥é”™å‚æ•°ï¼Œæ‰€ä»¥ (void) ä¿®é¥°ï¼Œè¡¨å·²è¢«ä½¿ç”¨
 }
 
 void defaultFlush()
 {
-	::fflush(stdout);	// ¾ÍÊÇµ÷ÓÃ libc func ½«±ê×¼Êä³ö flush - Ë¢ĞÂ
+	::fflush(stdout);	// å°±æ˜¯è°ƒç”¨ libc func å°†æ ‡å‡†è¾“å‡º flush - åˆ·æ–°
 }
 
-Logger::OutputFunc g_output = defaultOutput;		// ÕâÒ²ÊÇ "Í¬²½ÈÕÖ¾" ºÍ "Òì²½ÈÕÖ¾" ÇĞ»»µÄºËĞÄ½Ó¿Ú
+Logger::OutputFunc g_output = defaultOutput;		// è¿™ä¹Ÿæ˜¯ "åŒæ­¥æ—¥å¿—" å’Œ "å¼‚æ­¥æ—¥å¿—" åˆ‡æ¢çš„æ ¸å¿ƒæ¥å£
 Logger::FlushFunc g_flush = defaultFlush;
 
 }	// namespace Misaka
@@ -111,7 +111,7 @@ Logger::Impl::Impl(LogLevel level, int old_errno, const Logger::SourceFile& base
 	}
 }
 
-// ÕâÀïµÄÉè¼Æ£¬Ã»ÓĞ¿¼ÂÇÊ±Çø£¬Ä¿Ç°¶ÔÏµÍ³Ê±¼äµÄÕÆÎÕÉÔÓĞ²»×ã£¬ÔİÇÒ¼ÇÏÂ£¬ºóĞøÔÙÍêÉÆ
+// è¿™é‡Œçš„è®¾è®¡ï¼Œæ²¡æœ‰è€ƒè™‘æ—¶åŒºï¼Œç›®å‰å¯¹ç³»ç»Ÿæ—¶é—´çš„æŒæ¡ç¨æœ‰ä¸è¶³ï¼Œæš‚ä¸”è®°ä¸‹ï¼Œåç»­å†å®Œå–„
 void Logger::Impl::formatTime()
 {
 	int64_t microSecondsSinceEpoch = time_.microSecondsSinceEpoch();
@@ -122,13 +122,13 @@ void Logger::Impl::formatTime()
 		t_lastsecond = seconds;
 		struct tm tm_time;
 		::gmtime_r(&seconds, &tm_time);
-		// ½«Ê±¼ä×ª»»Îª struct tm ¸ñÊ½£¬ÒÔ»ñÈ¡ year month µÈÊı¾İ [seconds -> year-mont-day hour-minute-second]
+		// å°†æ—¶é—´è½¬æ¢ä¸º struct tm æ ¼å¼ï¼Œä»¥è·å– year month ç­‰æ•°æ® [seconds -> year-mont-day hour-minute-second]
 
 		int len = snprintf(t_time, sizeof t_time, "%4d%02d%02d %02d:%02d:%02d",
 			tm_time.tm_year + 1900, tm_time.tm_mon + 1, tm_time.tm_mday,
 			tm_time.tm_hour, tm_time.tm_min, tm_time.tm_sec);
-		// +1900 ÊÇÒòÎª¼ÆËã»úÊ±¼äÊÇ 1900 Äê¿ªÊ¼¼ÆËã£¬ÄêÃ»ÓĞµÚ 0 ÄêÒ»Ëµ
-		// +1 ÔÂÍ¬ÑùÊÇÃ»ÓĞµÚ 0 ÔÂÒ»Ëµ
+		// +1900 æ˜¯å› ä¸ºè®¡ç®—æœºæ—¶é—´æ˜¯ 1900 å¹´å¼€å§‹è®¡ç®—ï¼Œå¹´æ²¡æœ‰ç¬¬ 0 å¹´ä¸€è¯´
+		// +1 æœˆåŒæ ·æ˜¯æ²¡æœ‰ç¬¬ 0 æœˆä¸€è¯´
 		assert(17 == len);	(void)len;
 	}
 
@@ -137,10 +137,10 @@ void Logger::Impl::formatTime()
 	stream_ << T(t_time, 17) << T(us.data(), 9);
 
 	//stream_ << T(t_time, 17) << us;
-	// Á½¸ö << ·Ö±ğµ÷ÓÃ²»Í¬µÄ operator<< ÖØÔØ
-	// Ç°Õß£ºoperator<<(LogStream&, T)
-	// ºóÕß£ºoperator<<(LogStream&, Fmt)
-	// ÎÒÑ¡Ôñ³¤µÃË§µÄÄÇµÄ¿î :)
+	// ä¸¤ä¸ª << åˆ†åˆ«è°ƒç”¨ä¸åŒçš„ operator<< é‡è½½
+	// å‰è€…ï¼šoperator<<(LogStream&, T)
+	// åè€…ï¼šoperator<<(LogStream&, Fmt)
+	// æˆ‘é€‰æ‹©é•¿å¾—å¸…çš„é‚£çš„æ¬¾ :)
 }
 
 void Logger::Impl::finish()

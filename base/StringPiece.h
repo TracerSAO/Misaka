@@ -5,16 +5,16 @@
 #include <iosfwd>	// for ostream forward-declaration
 
 /**
-* Ìá¹© StringArg ºÍ StringPiece ÕâÁ½¸ö class µÄÄ¿µÄ£º
-*	> ±ÜÃâÔÚ´«µİ×Ö·û´®³£Á¿Ê±£¬Òò std::string µÄ¹¹Ôì£¬¶ø²úÉú string ÁÙÊ±¶ÔÏó
-*	> ·ñÔò£¬»á¶àÔö¼ÓÒ»´Î ctor¡¢Ò»´Î dtor¡¢ÒÔ¼° string »á×ª´æ ×Ö·û´®±äÁ¿
+* æä¾› StringArg å’Œ StringPiece è¿™ä¸¤ä¸ª class çš„ç›®çš„ï¼š
+*	> é¿å…åœ¨ä¼ é€’å­—ç¬¦ä¸²å¸¸é‡æ—¶ï¼Œå›  std::string çš„æ„é€ ï¼Œè€Œäº§ç”Ÿ string ä¸´æ—¶å¯¹è±¡
+*	> å¦åˆ™ï¼Œä¼šå¤šå¢åŠ ä¸€æ¬¡ ctorã€ä¸€æ¬¡ dtorã€ä»¥åŠ string ä¼šè½¬å­˜ å­—ç¬¦ä¸²å˜é‡
 */
 
 namespace Misaka
 {
 
 
-//	Ìá¹©ÓÃÓÚº¯Êı²ÎÊıÀàĞÍµÄ C-Style µÄ string ²ÎÊıÀàĞÍ -> string-view
+//	æä¾›ç”¨äºå‡½æ•°å‚æ•°ç±»å‹çš„ C-Style çš„ string å‚æ•°ç±»å‹ -> string-view
 class StringArg
 {
 public:
@@ -32,8 +32,8 @@ private:
 	const char* str_;
 };
 
-// Ìá¹©¿ÉÓÃÓÚº¯Êı²ÎÊıµÄ CPP-Style µÄ string ²ÎÊıÀàĞÍ -> string-view
-class StringPiece	// : public copyable // ÖµÓïÒå
+// æä¾›å¯ç”¨äºå‡½æ•°å‚æ•°çš„ CPP-Style çš„ string å‚æ•°ç±»å‹ -> string-view
+class StringPiece	// : public copyable // å€¼è¯­ä¹‰
 {
 public:
 	StringPiece():
@@ -42,7 +42,7 @@ public:
 	StringPiece(const char* str):
 		ptr_(str), length_(static_cast<int>(strlen(ptr_))) { }
 	StringPiece(const unsigned char* str):
-		ptr_(reinterpret_cast<const char*>(str)),		// ÎŞ¸ºÃæÓ°Ïì sizeof(unsigned char) == sizeof(char)
+		ptr_(reinterpret_cast<const char*>(str)),		// æ— è´Ÿé¢å½±å“ sizeof(unsigned char) == sizeof(char)
 		length_(static_cast<int>(strlen(ptr_)))	{ }
 	StringPiece(const string& str) :
 		ptr_(str.c_str()), length_(static_cast<int>(str.size())) { }
@@ -76,7 +76,7 @@ public:
 		return ptr_[i];
 	}
 
-	// FIXME: ¸ù¾İÊµ¼ÊĞèÇó£¬×·¼Ó±£»¤´ëÊ©
+	// FIXME: æ ¹æ®å®é™…éœ€æ±‚ï¼Œè¿½åŠ ä¿æŠ¤æªæ–½
 	void remove_prefix(int n) {
 		ptr_ += n;
 		length_ -= n;
@@ -134,7 +134,7 @@ private:
 
 }	// namespace Misaka
 
-// ÔÊĞí StringPiece ±» logged
+// å…è®¸ StringPiece è¢« logged
 std::ostream& operator<<(std::ostream& o, const Misaka::StringPiece& piece);
 
 #endif // !MISAKA_STRINGPIECE_H

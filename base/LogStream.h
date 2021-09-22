@@ -45,17 +45,17 @@ public:
 
 	char* current() { return cur_; }
 	int avail() const { return static_cast<int>(end() - cur_); }
-	void add(size_t len) { cur_ += len; }	// ÅäºÏÌØÊâµÄ char write to buffer Ê¹ÓÃ£¬²»Í¬ÓÚ memcpy µÄÕû¿éĞ´Èë
+	void add(size_t len) { cur_ += len; }	// é…åˆç‰¹æ®Šçš„ char write to buffer ä½¿ç”¨ï¼Œä¸åŒäº memcpy çš„æ•´å—å†™å…¥
 
 	void reset() { cur_ = data_; }
 	void bzero() { ::bzero(data_, sizeof data_); }
 
 	// for GDB
 	const char* debugString();
-	// ¿ÉÒÔ¶¨Î»ÄÇĞ©ÔÚ³ÌĞò±ÀÀ£ºó£¬ÉĞÎ´À´µÃ¼°Ğ´Èë DISK µÄ LOG-data
+	// å¯ä»¥å®šä½é‚£äº›åœ¨ç¨‹åºå´©æºƒåï¼Œå°šæœªæ¥å¾—åŠå†™å…¥ DISK çš„ LOG-data
 	void setCookie(void (*cookie)()) { cookie_ = cookie; }
 
-	// for unit-test || ¶ÔÎÒ¶øÑÔ£¬·½±ãÊä³ö²é¿´½á¹û
+	// for unit-test || å¯¹æˆ‘è€Œè¨€ï¼Œæ–¹ä¾¿è¾“å‡ºæŸ¥çœ‹ç»“æœ
 	string toString() const { return string(data_, length()); }
 	StringPiece toStringPiece() const { return StringPiece(data_, length()); }
 
@@ -149,7 +149,7 @@ private:
 
 private:
 	Buffer buffer_;
-	static const int kMaxNumbericSize = 32;		// ÓÃÓÚ ÄÚÖÃÊı¾İÀàĞÍ ×ª»»µ½ string
+	static const int kMaxNumbericSize = 32;		// ç”¨äº å†…ç½®æ•°æ®ç±»å‹ è½¬æ¢åˆ° string
 };
 
 class Fmt
@@ -166,10 +166,10 @@ private:
 	int length_;
 };
 
-// ²»ÖªµÀÊÇ²»ÊÇ muduo µÄÊèºö£¬logging.cc ÖĞ²¢Ã»ÓĞ¸´ÓÃÕâ¸ö½Ó¿Ú£¬¶øÊÇÊ¹ÓÃĞÂµÄ½Ó¿Ú
+// ä¸çŸ¥é“æ˜¯ä¸æ˜¯ muduo çš„ç–å¿½ï¼Œlogging.cc ä¸­å¹¶æ²¡æœ‰å¤ç”¨è¿™ä¸ªæ¥å£ï¼Œè€Œæ˜¯ä½¿ç”¨æ–°çš„æ¥å£
 // LogStream& operator<<(Logstream& os, const T& val);
-// ¸öÈËÈÏÎªÁ½Õß²¢Ã»ÓĞÊ²Ã´Ì«´óÇø±ğ£¬Ïà·´£¬Ç°Õß»¹»á¶àÒ»´Î ctor
-// ¶ÔÍâÌá¹©Ò»¸öÓÃ»§¿ÉÒÔÖ±½Ó½« class Fmt Êä³öµ½ LogStream µÄ½Ó¿Ú
+// ä¸ªäººè®¤ä¸ºä¸¤è€…å¹¶æ²¡æœ‰ä»€ä¹ˆå¤ªå¤§åŒºåˆ«ï¼Œç›¸åï¼Œå‰è€…è¿˜ä¼šå¤šä¸€æ¬¡ ctor
+// å¯¹å¤–æä¾›ä¸€ä¸ªç”¨æˆ·å¯ä»¥ç›´æ¥å°† class Fmt è¾“å‡ºåˆ° LogStream çš„æ¥å£
 inline LogStream& operator<<(LogStream& os, const Fmt& us)
 {
 	os.append(us.data(), us.length());

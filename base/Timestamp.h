@@ -9,7 +9,7 @@
 /**
  * boost::equality_comparable<>  && boost::less_than_comparable<>
  * 
- * since C++ 20£¬²Å±»ÒıÈë cpp::std
+ * since C++ 20ï¼Œæ‰è¢«å¼•å…¥ cpp::std
  */
 
 namespace Misaka
@@ -64,7 +64,7 @@ public:
 private:
 	int64_t microSecondsSinceEpoch_;
 	// 292,471.20867753601623541349568747
-	// int64_t ¿ÉÒÔ±íÊ¾ÉÏÏÂ 30 ÍòÄêµÄÊ±¼äÏŞ (Õı¸º±íÉÏÏÂ)
+	// int64_t å¯ä»¥è¡¨ç¤ºä¸Šä¸‹ 30 ä¸‡å¹´çš„æ—¶é—´é™ (æ­£è´Ÿè¡¨ä¸Šä¸‹)
 };
 
 inline bool operator==(const Timestamp& lt, const Timestamp& rt)

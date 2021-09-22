@@ -45,7 +45,7 @@ public:
 	}
 
 private:
-	void threadFunc();	// ÓÃÓÚ thread µÄ»Øµ÷º¯Êý
+	void threadFunc();	// ç”¨äºŽ thread çš„å›žè°ƒå‡½æ•°
 
 private:
 	using Buffer = Misaka::detail::FixedBuffer<Misaka::detail::kLargeBuffer>;

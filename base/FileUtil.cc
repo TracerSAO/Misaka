@@ -13,7 +13,7 @@ FileUtil::AppendFile::AppendFile(StringArg filename) :
 {
 	assert(fp_);
 	::setbuffer(fp_, buffer_, sizeof buffer_);
-	// Éè¶¨»º³åÇø£¬Ìá¹©×Ö·ûÄÚÈİÅúÁ¿Ğ´Èë DISK
+	// è®¾å®šç¼“å†²åŒºï¼Œæä¾›å­—ç¬¦å†…å®¹æ‰¹é‡å†™å…¥ DISK
 }
 
 FileUtil::AppendFile::~AppendFile()
@@ -25,7 +25,7 @@ void FileUtil::AppendFile::append(const char* logline, int len)
 {
 	size_t n = write(logline, len);
 	size_t remain = len - n;
-	while (0 < remain)	// ÖØ¸´µ÷ÓÃ write()£¬È·±£ËùÓĞÊı¾İĞ´Èë³É¹¦
+	while (0 < remain)	// é‡å¤è°ƒç”¨ write()ï¼Œç¡®ä¿æ‰€æœ‰æ•°æ®å†™å…¥æˆåŠŸ
 	{
 		size_t x = write(logline + n, remain);
 		if (0 == x)
@@ -52,10 +52,10 @@ void FileUtil::AppendFile::flush()
 size_t FileUtil::AppendFile::write(const char* str, size_t len)
 {
 	return ::fwrite_unlocked(str, 1, len, fp_);
-	// Ê¹ÓÃµÄÊÇÎŞËø fwrite -> thread unsafe
-	// why? ÒòÎª Misaka Ö»ÓĞÒ»¸öÏò Disk Ğ´Èë log data µÄ work thread
-	// ÕâÒ²ÊÇ muduo LOG µÄÉè¼ÆÀíÄî£º
-	//		multi-thread ÓÃÓÚÊÕ¼¯ every loop ÖĞ²úÉúµÄ log data,
-	//		×îÖÕÖ»ÓĞÒ»¸öÏß³Ì½«Êı¾İÈ«ÊıĞ´Èë Disk
-	// ¶àÏß³ÌµÄÔÚĞ´ÈÕÖ¾·½ÃæµÄÓ¦ÓÃ£¬²¢²»ÊÇ¶à¸öÏß³ÌÈ¥Ğ´Í¬Ò»¸öÎÄ¼ş£¬ÕâÑù²¢²»»áºÜ¿ì£¬Ïß³Ì¼äµÄ¾ºÌ¬Í¬Ñù»áµ¼ÖÂºÜ´óµÄ¿ªÏú£¬ÉõÖÁ»áÓ°ÏìÊµÊ±ĞÔ
+	// ä½¿ç”¨çš„æ˜¯æ— é” fwrite -> thread unsafe
+	// why? å› ä¸º Misaka åªæœ‰ä¸€ä¸ªå‘ Disk å†™å…¥ log data çš„ work thread
+	// è¿™ä¹Ÿæ˜¯ muduo LOG çš„è®¾è®¡ç†å¿µï¼š
+	//		multi-thread ç”¨äºæ”¶é›† every loop ä¸­äº§ç”Ÿçš„ log data,
+	//		æœ€ç»ˆåªæœ‰ä¸€ä¸ªçº¿ç¨‹å°†æ•°æ®å…¨æ•°å†™å…¥ Disk
+	// å¤šçº¿ç¨‹çš„åœ¨å†™æ—¥å¿—æ–¹é¢çš„åº”ç”¨ï¼Œå¹¶ä¸æ˜¯å¤šä¸ªçº¿ç¨‹å»å†™åŒä¸€ä¸ªæ–‡ä»¶ï¼Œè¿™æ ·å¹¶ä¸ä¼šå¾ˆå¿«ï¼Œçº¿ç¨‹é—´çš„ç«æ€åŒæ ·ä¼šå¯¼è‡´å¾ˆå¤§çš„å¼€é”€ï¼Œç”šè‡³ä¼šå½±å“å®æ—¶æ€§
 }

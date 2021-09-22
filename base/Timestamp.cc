@@ -3,7 +3,7 @@
 #include <sys/time.h>
 #include <cstdio>
 
-#ifndef __STDC_FORMAT_MACROS    // ¶¨Òåºó²ÅÄÜÊ¹ÓÃ PRI64 format type
+#ifndef __STDC_FORMAT_MACROS    // å®šä¹‰åæ‰èƒ½ä½¿ç”¨ PRI64 format type
 #define __STDC_FORMAT_MACROS
 #endif
 
@@ -11,7 +11,7 @@
 
 using namespace Misaka;
 
-// muduo Ó¦¸ÃÔÚ±àÒëÊ±Ê¹ÓÃÁË g++ ÌØÊâµÄ±àÒë²ÎÊı£¬msvc g++ default ×´Ì¬ÏÂ£¬¶¼ÊÇ¼ì²é´íÎó
+// muduo åº”è¯¥åœ¨ç¼–è¯‘æ—¶ä½¿ç”¨äº† g++ ç‰¹æ®Šçš„ç¼–è¯‘å‚æ•°ï¼Œmsvc g++ default çŠ¶æ€ä¸‹ï¼Œéƒ½æ˜¯æ£€æŸ¥é”™è¯¯
 //static_assert(sizeof(Timestamp) == sizeof(int64_t),
 //    "Timestamp should be same size as int64_t");
 

@@ -39,10 +39,10 @@ WeakCallback<CLASS, ARGS...> makeWeakCallback(
 	void(CLASS::* func)(ARGS...))
 {
 	return WeakCallback<CLASS, ARGS...>(object, func);
-	// ²»ÓÃ¾ªÑÈ ¡°void(CLASS*::func)(ARGS...) -> void(CLASS*, ARGS...)
-	// ÒòÎªÇ°ÕßÊÇ class member function£¬¿É±ğÍü¼Ç ta ÓĞÒ»¸öÒş²Ø²ÎÊı this :P
+	// ä¸ç”¨æƒŠè®¶ â€œvoid(CLASS*::func)(ARGS...) -> void(CLASS*, ARGS...)
+	// å› ä¸ºå‰è€…æ˜¯ class member functionï¼Œå¯åˆ«å¿˜è®° ta æœ‰ä¸€ä¸ªéšè—å‚æ•° this :P
 
-	// Õ¹¿ªÊ½
+	// å±•å¼€å¼
 	//return WeakCallback<CLASS, ARGS...>(object,
 	//		std::function<void(CLASS*, ARGS...)>(func));
 }

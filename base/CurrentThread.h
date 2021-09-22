@@ -9,7 +9,7 @@ namespace CurrentThread
 
 extern __thread int t_cachedTid;
 extern __thread char t_tidString[32];
-extern __thread int t_tidStringLength;		// 5 + 1£¬¶à¼Ó 1 -> ¡®\0'
+extern __thread int t_tidStringLength;		// 5 + 1Â£Â¬Â¶Ã Â¼Ã“ 1 -> Â¡Â®\0'
 extern __thread const char* t_threadName;
 void cachedTid();
 

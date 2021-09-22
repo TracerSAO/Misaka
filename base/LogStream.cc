@@ -11,7 +11,7 @@
 
 
 #ifndef __STDC_FORMAT_MACROS
-#define __STDC_FORMAT_MACROS		// ¶¨Òåºó²ÅÄÜÊ¹ÓÃ PRI64 format type
+#define __STDC_FORMAT_MACROS		// å®šä¹‰åæ‰èƒ½ä½¿ç”¨ PRI64 format type
 #endif // !__STDC_FORMAT_MACROS
 
 #include <inttypes.h>
@@ -33,7 +33,7 @@ namespace detail
 	const char digitsHex[] = "0123456789ABCDEF";
 	static_assert(sizeof(digitsHex) == 17, "wrong number of digitsHex");
 
-	// ¸ßĞ§µÄ int ×ª»»Îª string Ëã·¨£¬by Matthew Wilson.
+	// é«˜æ•ˆçš„ int è½¬æ¢ä¸º string ç®—æ³•ï¼Œby Matthew Wilson.
 	template<typename T>
 	size_t convert(char* buf, T val)
 	{
@@ -42,16 +42,16 @@ namespace detail
 		do
 		{
 			int index = static_cast<int>(temp % 10);
-			*ptr++ = zero[index];	// index ¿ÉÕı¿É¸º -> zero[-1] = zero + -1 || zero[0] = zero + 0
+			*ptr++ = zero[index];	// index å¯æ­£å¯è´Ÿ -> zero[-1] = zero + -1 || zero[0] = zero + 0
 			temp /= 10;
 		} while (0 != temp);
 		
 		if (0 > val)
 			*ptr++ = '-';
 		*ptr = '\0';
-		std::reverse(buf, ptr);		// range: [buf, ptr)£¬Ç°±Õºó¿ª
+		std::reverse(buf, ptr);		// range: [buf, ptr)ï¼Œå‰é—­åå¼€
 
-		return ptr - buf;			// ·µ»ØµÄÖµÔªËØµÄ¸öÊı£¬²»°üº¬ '\0'£¬Ô­ÒòÊÇ cur_ ²»»áÖ¸Ïò '\0'
+		return ptr - buf;			// è¿”å›çš„å€¼å…ƒç´ çš„ä¸ªæ•°ï¼Œä¸åŒ…å« '\0'ï¼ŒåŸå› æ˜¯ cur_ ä¸ä¼šæŒ‡å‘ '\0'
 	}
 
 	size_t convertHex(char* buf, uintptr_t val)
@@ -95,7 +95,7 @@ void FixedBuffer<size>::cookieEnd()
 }
 
 
-// Q: ÎªÊ²Ã´ kMaxNumbericSize - 10 £¿£¿£¿
+// Q: ä¸ºä»€ä¹ˆ kMaxNumbericSize - 10 ï¼Ÿï¼Ÿï¼Ÿ
 void LogStream::staticCheck()
 {
 	static_assert(kMaxNumbericSize - 10 > std::numeric_limits<double>::digits10,
@@ -188,7 +188,7 @@ Fmt::Fmt(const char* fmt, T val)
 {
 	static_assert(std::is_arithmetic<T>::value == true, "Must be arithmetic type");
 	length_ = snprintf(buf_, sizeof buf_, fmt, val);
-	assert(static_cast<size_t>(length_) < sizeof buf_);	// Ç¿Ğ£Ñé£¿£¿£¿
+	assert(static_cast<size_t>(length_) < sizeof buf_);	// å¼ºæ ¡éªŒï¼Ÿï¼Ÿï¼Ÿ
 }
 
 

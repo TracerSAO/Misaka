@@ -36,20 +36,20 @@ private:
 	static string getLogFileName(const string& basename, time_t* now);
 
 private:
-	const string basename_;	// LOG file Ãû×ÖµÄÒ»²¿·Ö
-	const off_t rollSize_;	// Ò»¸ö LOG file size µÄ×î´óÖµ [µ¥Î»: byte]
-	const int flushInterval_;	// LOG ¿ªÆôÇ¿ÖÆ flush µÄ×î³¤Ê±¼äÖÜÆÚ
-	const int checkEveryN_;	// ³ÌĞòÒ»¸öÖÜÆÚÄÚ£¬¿ÉÒÔÏò´ÅÅÌ·¢ÆğµÄĞ´Èë²Ù×÷µÄ×î´ó´ÎÊı
+	const string basename_;	// LOG file åå­—çš„ä¸€éƒ¨åˆ†
+	const off_t rollSize_;	// ä¸€ä¸ª LOG file size çš„æœ€å¤§å€¼ [å•ä½: byte]
+	const int flushInterval_;	// LOG å¼€å¯å¼ºåˆ¶ flush çš„æœ€é•¿æ—¶é—´å‘¨æœŸ
+	const int checkEveryN_;	// ç¨‹åºä¸€ä¸ªå‘¨æœŸå†…ï¼Œå¯ä»¥å‘ç£ç›˜å‘èµ·çš„å†™å…¥æ“ä½œçš„æœ€å¤§æ¬¡æ•°
 
-	int count_;	// ¼ÇÂ¼µ±Ç°ÒÑÏò´ÅÅÌ·¢ÆğĞ´ÈëµÄ´ÎÊı£¬µ±´ïµ½ãĞÖµºó£¬Ç¿ÖÆÆô¶¯ flush()£¬È·±£Êı¾İĞ´Èë DISK
+	int count_;	// è®°å½•å½“å‰å·²å‘ç£ç›˜å‘èµ·å†™å…¥çš„æ¬¡æ•°ï¼Œå½“è¾¾åˆ°é˜ˆå€¼åï¼Œå¼ºåˆ¶å¯åŠ¨ flush()ï¼Œç¡®ä¿æ•°æ®å†™å…¥ DISK
 
 	std::unique_ptr<MutexLock> mutex_;
-	time_t startOfPeriod_;	// ³õÊ¼ÆÚ¿¯ -> µ±Ç°ÓĞĞ§Ê±¼ä¶Î [µ¥Î»: day]
-	time_t lastRoll_;	// ±£»¤ LOG file£¬±ÜÃâ³öÏÖÖØÃû£¬Ïê¼û: rollFIle()
-	time_t lastFlush_;	// Ó¦¶Ô rollSize ¹ı´ó && back-end ´ıĞ´ÈëÊı¾İ¹ı¶àµÄÇé¿ö£¬È·±£Êı¾İ¿ÉÒÔ¼°Ê± flush ½ø DISK
+	time_t startOfPeriod_;	// åˆå§‹æœŸåˆŠ -> å½“å‰æœ‰æ•ˆæ—¶é—´æ®µ [å•ä½: day]
+	time_t lastRoll_;	// ä¿æŠ¤ LOG fileï¼Œé¿å…å‡ºç°é‡åï¼Œè¯¦è§: rollFIle()
+	time_t lastFlush_;	// åº”å¯¹ rollSize è¿‡å¤§ && back-end å¾…å†™å…¥æ•°æ®è¿‡å¤šçš„æƒ…å†µï¼Œç¡®ä¿æ•°æ®å¯ä»¥åŠæ—¶ flush è¿› DISK
 	std::unique_ptr<FileUtil::AppendFile> file_;
 
-	const static int kRollPerSeconds = 60 * 60 * 24;	// LOG roll(¹ö¶¯) µÄÊ±¼äÖÜÆÚ´óĞ¡
+	const static int kRollPerSeconds = 60 * 60 * 24;	// LOG roll(æ»šåŠ¨) çš„æ—¶é—´å‘¨æœŸå¤§å°
 };
 
 }	// namespace Misaka

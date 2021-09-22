@@ -21,7 +21,7 @@ AsyncLogging::AsyncLogging(const string basename,
 {
 	currentBuffer_->bzero();
 	nextBuffer_->bzero();
-	buffers_.reserve(16);		// ×î¶à´æ·Å 16 ¿é Buffer »º´æ
+	buffers_.reserve(16);		// æœ€å¤šå­˜æ”¾ 16 å— Buffer ç¼“å­˜
 }
 
 void AsyncLogging::append(const char* logline, int len)
@@ -33,7 +33,7 @@ void AsyncLogging::append(const char* logline, int len)
 	}
 	else
 	{
-		buffers_.push_back(std::move(currentBuffer_));	// unique_ptr ÌØÊâµÄĞÔÖÊ£¬Ö»ÄÜÊ¹ÓÃÒÆ¶¯ÓïÒå
+		buffers_.push_back(std::move(currentBuffer_));	// unique_ptr ç‰¹æ®Šçš„æ€§è´¨ï¼Œåªèƒ½ä½¿ç”¨ç§»åŠ¨è¯­ä¹‰
 		if (nullptr != nextBuffer_)
 		{
 			currentBuffer_ = std::move(nextBuffer_);
@@ -50,7 +50,7 @@ void AsyncLogging::append(const char* logline, int len)
 void AsyncLogging::threadFunc()
 {
 	assert(true == running_);
-	latch_.countDown();	// Í¨ÖªÖ÷Ïß³Ì£¬×Ô¼ºÒÑ¾­Ö´ĞĞµ½ threadFunc()
+	latch_.countDown();	// é€šçŸ¥ä¸»çº¿ç¨‹ï¼Œè‡ªå·±å·²ç»æ‰§è¡Œåˆ° threadFunc()
 	LogFile output(basename_, rollSize_, false);
 	BufferPtr nextBuffer1(new Buffer);
 	BufferPtr nextBuffer2(new Buffer);
