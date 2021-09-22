@@ -75,33 +75,33 @@ uint32_t InetAddress::ipv4NetEndian() const
 	return addr_.sin_addr.s_addr;
 }
 
-// ¸¨Öú resolve() ÊµÏÖ thread-safe
+// è¾…åŠ© resolve() å®ç° thread-safe
 static __thread char t_resovleBuffer[64 * 1024];
 
 bool InetAddress::resolve(StringArg hostname, InetAddress* out)
 {
 	assert(nullptr != out);
-	struct hostent hent;	// ÓÃÓÚĞ£Õı DNS-server ·µ»Ø½á¹ûµÄ·½Ê½ -[IPv4 or IPv6]
-	struct hostent* he;		// ½ÓÊÜ½âÎö½â·µ»ØµÄ½á¹¹£¬Í¨¹ı²ÎÊı·µ»Ø
-	int herrno;				// ÔİÊ±·ÀÖ¹ÔÚÕâÀï£¬ËäÈ»ËµÏÖÔÚÓÃ²»ÉÏ
-	bzero(&hent, sizeof hent);		// ÒòÎªÎÒÃÇµÄÉè¼ÆÖĞ²»ĞèÒª¿¼ÂÇ DNS-server ÒÔºÎÖÖ·½Ê½·µ»Ø½á¹û£¬ËùÒÔÖ±½Ó½«Ğ£ÕıÇå¿Õ´ïµº default Ğ§¹û
+	struct hostent hent;	// ç”¨äºæ ¡æ­£ DNS-server è¿”å›ç»“æœçš„æ–¹å¼ -[IPv4 or IPv6]
+	struct hostent* he;		// æ¥å—è§£æè§£è¿”å›çš„ç»“æ„ï¼Œé€šè¿‡å‚æ•°è¿”å›
+	int herrno;				// æš‚æ—¶é˜²æ­¢åœ¨è¿™é‡Œï¼Œè™½ç„¶è¯´ç°åœ¨ç”¨ä¸ä¸Š
+	bzero(&hent, sizeof hent);		// å› ä¸ºæˆ‘ä»¬çš„è®¾è®¡ä¸­ä¸éœ€è¦è€ƒè™‘ DNS-server ä»¥ä½•ç§æ–¹å¼è¿”å›ç»“æœï¼Œæ‰€ä»¥ç›´æ¥å°†æ ¡æ­£æ¸…ç©ºè¾¾å²› default æ•ˆæœ
 
 	int res = ::gethostbyname_r(hostname.c_str(), &hent, t_resovleBuffer, sizeof t_resovleBuffer, &he, &herrno);
 	if (0 <= res && nullptr != he)
 	{
 		assert(AF_INET == he->h_addrtype && sizeof(uint32_t) == he->h_length);
-		out->addr_.sin_addr = *reinterpret_cast<in_addr*>(he->h_addr);				// h_addr ÎªºêÕ¹¿ªÎª h_addr_list[0]
+		out->addr_.sin_addr = *reinterpret_cast<in_addr*>(he->h_addr);				// h_addr ä¸ºå®å±•å¼€ä¸º h_addr_list[0]
 		return true;
 	}
 	else
 	{
-		// FIXME: Ê¹ÓÃ LOG Ìæ»»
+		// FIXME: ä½¿ç”¨ LOG æ›¿æ¢
 		assert(0 <= res);
-		return false;		// ´Ë´¦ÒÑÎŞÒâÒå
+		return false;		// æ­¤å¤„å·²æ— æ„ä¹‰
 	}
 }
 
-// ÔÛ²»Çå³ş×÷ÓÃ£¬Ôİ³Ö¹ÛÍûÌ¬¶È£¬¸ù¾İºóĞø¿ª·¢Çé¿öÔÙ×ö¶¨¶á
+// å’±ä¸æ¸…æ¥šä½œç”¨ï¼Œæš‚æŒè§‚æœ›æ€åº¦ï¼Œæ ¹æ®åç»­å¼€å‘æƒ…å†µå†åšå®šå¤º
 void InetAddress::setScopeId(uint32_t scope_id)
 {
 	if (family() == AF_INET6)

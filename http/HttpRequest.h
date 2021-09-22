@@ -136,10 +136,10 @@ public:
 	{
 		string field(begin, colon);
 		colon++;
-		while (end != colon && ' ' == *colon)	// ÇåÀí¶àÓàµÄ ' '
+		while (end != colon && ' ' == *colon)	// æ¸…ç†å¤šä½™çš„ ' '
 			colon++;
 		string val(colon, end);
-		while (!val.empty() && ' ' == val[val.size() - 1])	// ÇåÀíºó·½ ' '
+		while (!val.empty() && ' ' == val[val.size() - 1])	// æ¸…ç†åæ–¹ ' '
 			val.resize(val.size() - 1);
 		headers_[field] = string(colon, end);
 	}

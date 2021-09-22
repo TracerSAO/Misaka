@@ -41,10 +41,10 @@ public:
 
 	void start();
 
-	// ¶ÔÍâ½Ó¿Ú£¬user ±ØĞëÔÚ TcpServer Æô¶¯Ç°Éè¶¨ºÃ ThreadNum
+	// å¯¹å¤–æ¥å£ï¼Œuser å¿…é¡»åœ¨ TcpServer å¯åŠ¨å‰è®¾å®šå¥½ ThreadNum
 	void setThreadNum(int numThreads);
-	// ¶ÔÍâ½Ó¿Ú£¬Îª user Ìá¹©Ò»¸ö¿ÉÒÔÔÚ multi-thread ´´½¨ºó£¬¿ÉÒÔÖ´ĞĞµÄ¶¯×÷£¬ÕæÃ´ÓÃ¿´ÓÃ»§×Ô¼º
-	// eg: ¿ÉÒÔÉè¶¨Ò»¸ö ¡°Ã¿¸ô 10 Ãë´òÓ¡Ò»¾ä 'bilibili~ 2233' µÄ¶¨Ê±º¯Êı¡±
+	// å¯¹å¤–æ¥å£ï¼Œä¸º user æä¾›ä¸€ä¸ªå¯ä»¥åœ¨ multi-thread åˆ›å»ºåï¼Œå¯ä»¥æ‰§è¡Œçš„åŠ¨ä½œï¼ŒçœŸä¹ˆç”¨çœ‹ç”¨æˆ·è‡ªå·±
+	// eg: å¯ä»¥è®¾å®šä¸€ä¸ª â€œæ¯éš” 10 ç§’æ‰“å°ä¸€å¥ 'bilibili~ 2233' çš„å®šæ—¶å‡½æ•°â€
 	void setThreadInitCallback(const ThreadInitCallback& cb)
 	{ threadInitCallback_ = cb; }
 

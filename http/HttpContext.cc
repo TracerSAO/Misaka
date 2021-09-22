@@ -82,7 +82,7 @@ bool HttpContext::parseRequest(Buffer* buf, Timestamp receiveTime)
 			}
 			else
 			{
-				hasMore = false;	// ±¾´Î½âÎöµÄÊı¾İ°ü£¬²»¹»×é³ÉÒ»¸öÍê³ÉµÄ HTTP ÇëÇó°ü£¬µÈ´ıÏÂ´ÎÔÙ¼ÌĞø½âÎö
+				hasMore = false;	// æœ¬æ¬¡è§£æçš„æ•°æ®åŒ…ï¼Œä¸å¤Ÿç»„æˆä¸€ä¸ªå®Œæˆçš„ HTTP è¯·æ±‚åŒ…ï¼Œç­‰å¾…ä¸‹æ¬¡å†ç»§ç»­è§£æ
 			}
 		}
 		else if (HttpRequestParseState::kExpectHeads == state_)

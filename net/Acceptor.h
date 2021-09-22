@@ -39,7 +39,7 @@ private:
 	Channel acceptChannel_;
 	NewConnectionCallback newConnectionCallback_;
 	bool listening_;
-	int idleFd_;	// ±¸ÓÃÒ»¸ö idle(¿ÕÏÐ) ÎÄ¼þÃèÊö·û -> Ó¦¶ÔÎÄ¼þÃèÊö·û²»¹»µÄÇé¿ö
+	int idleFd_;	// å¤‡ç”¨ä¸€ä¸ª idle(ç©ºé—²) æ–‡ä»¶æè¿°ç¬¦ -> åº”å¯¹æ–‡ä»¶æè¿°ç¬¦ä¸å¤Ÿçš„æƒ…å†µ
 };
 
 }	// namespace net

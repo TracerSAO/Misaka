@@ -32,7 +32,7 @@ EventLoop* EventLoopThread::startLoop()
 
 	EventLoop* loop = nullptr;
 	{
-		MutexLockGuard lock(mutex_);	// Í¬ other thread Ö´ĞĞµÄ threadFunc Õù¶á mutex_ Õâ°ÑËø ¡ª¡ª ÒâÎ¶×Å loop_ µÄ¿ØÖÆÈ¨s
+		MutexLockGuard lock(mutex_);	// åŒ other thread æ‰§è¡Œçš„ threadFunc äº‰å¤º mutex_ è¿™æŠŠé” â€”â€” æ„å‘³ç€ loop_ çš„æ§åˆ¶æƒs
 		while (nullptr == loop_)
 			cond_.wait();
 		loop = loop_;

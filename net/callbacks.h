@@ -35,10 +35,10 @@ typedef std::function<void()> TimerCallback;
 typedef std::function<void (const TcpConnectionPtr&)> ConnectionCallback;
 typedef std::function<void (const TcpConnectionPtr&)> CloseCallback;
 typedef std::function<void (const TcpConnectionPtr&)> WriteCompleteCallback;
-typedef std::function<void (const TcpConnectionPtr&, size_t)> HighWaterMarkCallback;	// Êı¾İÁ¿³¬¹ı»º´æ¾¯½äÏß -> ´¥·¢¸ßË®Î»ÊÂ¼ş
+typedef std::function<void (const TcpConnectionPtr&, size_t)> HighWaterMarkCallback;	// æ•°æ®é‡è¶…è¿‡ç¼“å­˜è­¦æˆ’çº¿ -> è§¦å‘é«˜æ°´ä½äº‹ä»¶
 
-// ²»Í¬ÓÚÆäËû¼¸¸ö callback£¬ĞÂÔö¼ÓµÄ Timestamp ÊÇÌá¹©ÁËÒ»¸ö info ¡ª¡ª ÏûÏ¢ºÎÊ±µ½´ïµÄ info£¬
-// ÓÃ²»ÓÃ£¬¾ÍÒª¿´ user ×Ô¼º
+// ä¸åŒäºå…¶ä»–å‡ ä¸ª callbackï¼Œæ–°å¢åŠ çš„ Timestamp æ˜¯æä¾›äº†ä¸€ä¸ª info â€”â€” æ¶ˆæ¯ä½•æ—¶åˆ°è¾¾çš„ infoï¼Œ
+// ç”¨ä¸ç”¨ï¼Œå°±è¦çœ‹ user è‡ªå·±
 typedef std::function<void (const TcpConnectionPtr&, Buffer*, Timestamp)> MessageCallback;
 
 

@@ -41,7 +41,7 @@ int sockets::createNonblockingOrDie(sa_family_t family)
 {
 	int sockfd = ::socket(family, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, IPPROTO_TCP);
 	
-	// FIXME: Ê¹ÓÃ LOG Ìæ»»
+	// FIXME: ä½¿ç”¨ LOG æ›¿æ¢
 	assert(-1 != sockfd);
 	return sockfd;
 }
@@ -50,7 +50,7 @@ void sockets::bindOrDie(int sockfd, const struct sockaddr* addr)
 {
 	int res = ::bind(sockfd, addr, static_cast<socklen_t>(sizeof(struct sockaddr_in6)));
 
-	// FIXME: Ê¹ÓÃ LOG Ìæ»»
+	// FIXME: ä½¿ç”¨ LOG æ›¿æ¢
 	assert(-1 != res);
 }
 
@@ -58,7 +58,7 @@ void sockets::listenOrDie(int sockfd)
 {
 	int res = ::listen(sockfd, SOMAXCONN);
 
-	// FIXME: Ê¹ÓÃ LOG Ìæ»»
+	// FIXME: ä½¿ç”¨ LOG æ›¿æ¢
 	assert(-1 != res);
 }
 
@@ -68,7 +68,7 @@ int sockets::accept(int sockfd, struct sockaddr_in6* addr)
 	int connfd = ::accept4(sockfd, sockaddr_cast(addr),
 						&len, SOCK_NONBLOCK | SOCK_CLOEXEC);
 	
-	// FIXME: ÍêÉÆÒì³£´¦Àí£¬²¢×·¼Ó LOG£¬ÒÔ´ËÌæ»» assert()
+	// FIXME: å®Œå–„å¼‚å¸¸å¤„ç†ï¼Œå¹¶è¿½åŠ  LOGï¼Œä»¥æ­¤æ›¿æ¢ assert()
 	if (0 > connfd)
 	{
 		int saveerrno = errno;
@@ -122,10 +122,10 @@ void sockets::toIpPort(char* buf, size_t size,
 	{
 		buf[0] = '[';
 		toIp(buf + 1, size - 1, addr);
-		size_t end = ::strlen(buf);												// toIp ÖĞµ÷ÓÃ net_ntop()£¬buf ÖĞ»áÒÔ '\0' ½áÎ²£¬ÎÒÏàĞÅ glibc
+		size_t end = ::strlen(buf);												// toIp ä¸­è°ƒç”¨ net_ntop()ï¼Œbuf ä¸­ä¼šä»¥ '\0' ç»“å°¾ï¼Œæˆ‘ç›¸ä¿¡ glibc
 		const struct sockaddr_in6* addr_in6 = sockaddr_in6_cast(addr);
 		uint16_t port = sockets::networkToHost16(addr_in6->sin6_port);
-		assert(size > end);														// Ç¿Ğ£Ñé
+		assert(size > end);														// å¼ºæ ¡éªŒ
 		::snprintf(buf + end, size - end, "]:%u", port);
 	}
 	else if (addr->sa_family == AF_INET)
@@ -160,7 +160,7 @@ void sockets::fromIpPort(const char* ip, uint16_t port,
 	struct sockaddr_in* addr)
 {
 	int res = ::inet_pton(AF_INET, ip, &addr->sin_addr);
-	// FIXME: Ê¹ÓÃ LOG Ìæ»»
+	// FIXME: ä½¿ç”¨ LOG æ›¿æ¢
 	assert(0 <= res);
 	addr->sin_family = AF_INET;
 	addr->sin_port = sockets::hostToNetwork16(port);
@@ -169,13 +169,13 @@ void sockets::fromIpPort(const char* ip, uint16_t port,
 	struct sockaddr_in6* addr)
 {
 	int res = ::inet_pton(AF_INET6, ip, &addr->sin6_addr);
-	// FIXME: Ê¹ÓÃ LOG Ìæ»»
+	// FIXME: ä½¿ç”¨ LOG æ›¿æ¢
 	assert(0 <= res);
 	addr->sin6_family = AF_INET6;
 	addr->sin6_port = sockets::hostToNetwork16(port);
 }
 
-// Ôİ²»Ã÷ muduo ·â×°´ËÏµÍ³µ÷ÓÃµÄÒâÍ¼
+// æš‚ä¸æ˜ muduo å°è£…æ­¤ç³»ç»Ÿè°ƒç”¨çš„æ„å›¾
 int sockets::getSocketError(int sockfd)
 {
 	int optval;
@@ -196,7 +196,7 @@ struct sockaddr_in6 sockets::getLocalAddr(int sockfd)
 	bzero(&localAddr, sizeof localAddr);
 	socklen_t addrlen = static_cast<socklen_t>(sizeof localAddr);
 	int res = ::getsockname(sockfd, sockaddr_cast(&localAddr), &addrlen);
-	// FIXME: Ê¹ÓÃ LOG Ìæ»»
+	// FIXME: ä½¿ç”¨ LOG æ›¿æ¢
 	assert(0 <= res);
 	return localAddr;
 }
@@ -206,7 +206,7 @@ struct sockaddr_in6 sockets::getPeerAddr(int sockfd)
 	bzero(&peerAddr, sizeof peerAddr);
 	socklen_t addrlen = static_cast<socklen_t>(sizeof peerAddr);
 	int res = ::getpeername(sockfd, sockaddr_cast(&peerAddr), &addrlen);
-	// FIXME: Ê¹ÓÃ LOG Ìæ»»
+	// FIXME: ä½¿ç”¨ LOG æ›¿æ¢
 	assert(0 <= res);
 	return peerAddr;
 }

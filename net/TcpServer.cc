@@ -34,7 +34,7 @@ TcpServer::TcpServer(EventLoop* loop,
 
 TcpServer::~TcpServer()
 {
-	loop_->assertInLoopThread();	// ´Ë´¦ÎªÇ¿Ğ£Ñé, ÒòÎª TcpServer ´ÓÊ¼ÖÁÖÕ¶¼Ö»»á´æÔÚÓÚÒ»¸ö thread
+	loop_->assertInLoopThread();	// æ­¤å¤„ä¸ºå¼ºæ ¡éªŒ, å› ä¸º TcpServer ä»å§‹è‡³ç»ˆéƒ½åªä¼šå­˜åœ¨äºä¸€ä¸ª thread
 	for (auto& item : connections_)
 	{
 		TcpConnectionPtr conn(item.second);
@@ -50,7 +50,7 @@ TcpServer::~TcpServer()
 void TcpServer::setThreadNum(int numThreads)
 {
 	loop_->assertInLoopThread();
-	assert(!threadpool_->started());	// setThreadNum() ±ØĞëÔÚ start() Ö®Ç°µ÷ÓÃ
+	assert(!threadpool_->started());	// setThreadNum() å¿…é¡»åœ¨ start() ä¹‹å‰è°ƒç”¨
 	threadpool_->setThreadNum(numThreads);
 }
 
@@ -67,21 +67,21 @@ void TcpServer::start()
 
 void TcpServer::newConnection(int sockfd, const InetAddress& peerAddr)
 {
-	// »ñÈ¡ new TcpConnection µÄÃû×Ö
+	// è·å– new TcpConnection çš„åå­—
 	char buf[64];
 	snprintf(buf, sizeof buf, "-%s#%d", ipPort_.c_str(), nextConnId_);
 	nextConnId_++;
 	string connName = name_ + buf;
 
-	// ´òÈÕÖ¾
+	// æ‰“æ—¥å¿—
 	LOG_INFO << "TcpServer::newConnection [" << name_
 			 << "] - new connection [" << connName
 			 << "] from " << peerAddr.toIpPort();
 
-	// »ñÈ¡ new connection Ëù·ÖÅäµÄ EventLoop
+	// è·å– new connection æ‰€åˆ†é…çš„ EventLoop
 	EventLoop* ioLoop = threadpool_->getNextLoop();
 
-	// ´´½¨ new TcpConnection
+	// åˆ›å»º new TcpConnection
 	InetAddress localAddr(sockets::getLocalAddr(sockfd));
 	TcpConnectionPtr conn(new TcpConnection(ioLoop,
 											connName,
@@ -89,7 +89,7 @@ void TcpServer::newConnection(int sockfd, const InetAddress& peerAddr)
 											localAddr,
 											peerAddr));
 	
-	// ¼ÇÂ¼ÔÚ°¸
+	// è®°å½•åœ¨æ¡ˆ
 	connections_[connName] = conn;
 	conn->setConnectionCallback(connectionCallback_);
 	conn->setMessageCallback(messageCallback_);
@@ -99,15 +99,15 @@ void TcpServer::newConnection(int sockfd, const InetAddress& peerAddr)
 	ioLoop->runInLoop(std::bind(
 		&TcpConnection::connectionEstablished, conn));
 
-	// Ïò TcpConnection ¹éÊôµÄ EventLoop ÊÂ¼ş¼à¿Øµ¥Ôª×¢²áÕâ¸ö TcpConnection
-	// TcpConnection µÄ¼àÌıÊÂ¼şÍ¬ Acceptor Ò»Ñù£¬¶¼ÊÇÖ»ÓĞÔÚ´¥·¢Ìõ¼şµÄÇé¿öÏÂ²Å»á¿ªÆô¼àÌı£¬
-	// ²»Í¬ÓÚ TimerQueue, TimerQueue ÊÇÖ»Òª obj µ®Éú£¬Ä¬ÈÏ¿ªÆô¼àÌı
-	// ÒÔÉÏËù³ÂÊöµÄ²»Í¬£¬ÊÇ»ùÓÚ²»Í¬µÄÊÂ¼ş´¦ÀíÀ´·Ö±ğµÄ
+	// å‘ TcpConnection å½’å±çš„ EventLoop äº‹ä»¶ç›‘æ§å•å…ƒæ³¨å†Œè¿™ä¸ª TcpConnection
+	// TcpConnection çš„ç›‘å¬äº‹ä»¶åŒ Acceptor ä¸€æ ·ï¼Œéƒ½æ˜¯åªæœ‰åœ¨è§¦å‘æ¡ä»¶çš„æƒ…å†µä¸‹æ‰ä¼šå¼€å¯ç›‘å¬ï¼Œ
+	// ä¸åŒäº TimerQueue, TimerQueue æ˜¯åªè¦ obj è¯ç”Ÿï¼Œé»˜è®¤å¼€å¯ç›‘å¬
+	// ä»¥ä¸Šæ‰€é™ˆè¿°çš„ä¸åŒï¼Œæ˜¯åŸºäºä¸åŒçš„äº‹ä»¶å¤„ç†æ¥åˆ†åˆ«çš„
 	//conn->connectionEstablished();
 	
-	// ÕâÖÖĞ´·¨£¬ÊÇÓÃÓÚ multi-TcpServe
-	// ÇÒÕâÖÖĞ´·¨£¬Ò²ÊÇÊµÏÖ TcpConnection Ïò²»Í¬ EventLoop ·ÖÅäµÄ¹Ø¼ü
-	// Ö»ÓĞ¿çÏß³Ì£¬²ÅĞèÒªÊ¹ÓÃ runInLoop() ÕâÀï¾ÍÊÇÎªÁË½« ±¾ÊôÓÚ main-Loop µÄ¶«Î÷·¢ËÍµ½ other-Loop
+	// è¿™ç§å†™æ³•ï¼Œæ˜¯ç”¨äº multi-TcpServe
+	// ä¸”è¿™ç§å†™æ³•ï¼Œä¹Ÿæ˜¯å®ç° TcpConnection å‘ä¸åŒ EventLoop åˆ†é…çš„å…³é”®
+	// åªæœ‰è·¨çº¿ç¨‹ï¼Œæ‰éœ€è¦ä½¿ç”¨ runInLoop() è¿™é‡Œå°±æ˜¯ä¸ºäº†å°† æœ¬å±äº main-Loop çš„ä¸œè¥¿å‘é€åˆ° other-Loop
 	//loop_->runInLoop(
 	//	std::bind(&TcpConnection::connectionEstablished, get_pointer(conn)) );
 }

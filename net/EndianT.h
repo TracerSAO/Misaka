@@ -11,7 +11,7 @@ namespace net
 namespace sockets
 {
 
-// 已验证，g++9 编译时选择 -Wconversion 选项仍会报出 WARNING
+// 宸查獙璇侊紝g++9 缂栬瘧鏃堕�夋嫨 -Wconversion 閫夐」浠嶄細鎶ュ嚭 WARNING
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wconversion"
 #pragma GCC diagnostic ignored "-Wold-style-cast"

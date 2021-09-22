@@ -17,16 +17,16 @@ EventLoopThreadPool::EventLoopThreadPool(EventLoop* baseloop,
 
 EventLoopThreadPool::~EventLoopThreadPool()
 {
-	// Pool ÉúÃüÖÜÆÚ´ÓÊôÓÚ main-thread -> TcpServer
-	// TcpServer ÓÖÊÇ muduo ÍøÂç¿âÔËĞĞµÄºËĞÄ£¬main-thread not stop, TcpServer not stop
-	// Èç¹û TcpServer Í£Ö¹ÔËĞĞÁË£¬Ö»¿ÉÄÜÊÇ±» user ´ÓÍâ²¿ÖÕÖ¹£¬
-	// ´ËÊ±£¬main-Thread Ò²±ØÈ»»áÖÕÖ¹£¬
-	// main-thread ¶¼Í£Ö¹ÁË£¬ÄÇÃ´ other-son-thread ÔõÃ´¿ÉÄÜ»¹ÄÜ¼ÌĞøÔËĞĞÄØ£¿£¿£¿
+	// Pool ç”Ÿå‘½å‘¨æœŸä»å±äº main-thread -> TcpServer
+	// TcpServer åˆæ˜¯ muduo ç½‘ç»œåº“è¿è¡Œçš„æ ¸å¿ƒï¼Œmain-thread not stop, TcpServer not stop
+	// å¦‚æœ TcpServer åœæ­¢è¿è¡Œäº†ï¼Œåªå¯èƒ½æ˜¯è¢« user ä»å¤–éƒ¨ç»ˆæ­¢ï¼Œ
+	// æ­¤æ—¶ï¼Œmain-Thread ä¹Ÿå¿…ç„¶ä¼šç»ˆæ­¢ï¼Œ
+	// main-thread éƒ½åœæ­¢äº†ï¼Œé‚£ä¹ˆ other-son-thread æ€ä¹ˆå¯èƒ½è¿˜èƒ½ç»§ç»­è¿è¡Œå‘¢ï¼Ÿï¼Ÿï¼Ÿ
 	
-	// EventLoopThreadPool dead ÊÇ TcpServer dead µÄËõÓ°
-	// TcpServer ¶¼ËÀÍöÁË£¬ÄÇ main-thread ±ØÈ»Ò²»áËæÖ®½áÊø
-	// ¼ÈÈ»ËÀÍö¶¼ÊÇ±ØÈ»µÄ£¬ÄÇ¾Í¸ü±¾Ã»ÓĞ±ØÒª×öÉÆºó´¦ÀíÁËÂï
-	// ±Ï¾¹£¬ÍøÂç¶Ë³ÌĞò£¬²»ÒªÇóÄÜ¹»Õı³£ÍË³ö -> PS: ²»¶¼ÊÇ CTRL+C Âï XP
+	// EventLoopThreadPool dead æ˜¯ TcpServer dead çš„ç¼©å½±
+	// TcpServer éƒ½æ­»äº¡äº†ï¼Œé‚£ main-thread å¿…ç„¶ä¹Ÿä¼šéšä¹‹ç»“æŸ
+	// æ—¢ç„¶æ­»äº¡éƒ½æ˜¯å¿…ç„¶çš„ï¼Œé‚£å°±æ›´æœ¬æ²¡æœ‰å¿…è¦åšå–„åå¤„ç†äº†å˜›
+	// æ¯•ç«Ÿï¼Œç½‘ç»œç«¯ç¨‹åºï¼Œä¸è¦æ±‚èƒ½å¤Ÿæ­£å¸¸é€€å‡º -> PS: ä¸éƒ½æ˜¯ CTRL+C å˜› XP
 }
 
 void EventLoopThreadPool::start(const EventLoopThreadPool::ThreadInitCallback& cb)

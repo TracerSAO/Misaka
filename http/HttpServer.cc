@@ -84,8 +84,8 @@ void HttpServer::onConnection(const TcpConnectionPtr& conn)
 				HttpContext())
 		));
 	}
-	// Õâ¸ö»Øµ÷×¢²á£¬Ö»ÓĞÒ»¸ö×÷ÓÃ£¬³õÊ¼»¯ http-conn ÖĞµÄÉÏÏÂÎÄ
-	// ¼´£ºÇå¿ÕÄÚÈİ£¬µÈ´ı½âÎö url µÄÊı¾İ
+	// è¿™ä¸ªå›è°ƒæ³¨å†Œï¼Œåªæœ‰ä¸€ä¸ªä½œç”¨ï¼Œåˆå§‹åŒ– http-conn ä¸­çš„ä¸Šä¸‹æ–‡
+	// å³ï¼šæ¸…ç©ºå†…å®¹ï¼Œç­‰å¾…è§£æ url çš„æ•°æ®
 }
 
 void HttpServer::onMessage(const TcpConnectionPtr& conn, Buffer* buf, Timestamp receiveTime)
@@ -105,13 +105,13 @@ void HttpServer::onMessage(const TcpConnectionPtr& conn, Buffer* buf, Timestamp 
 		conn->shutdown();
 	}
 
-	if (httpContext->gotAll())	// Ê¹ÓÃ if Óï¾ä£¬ÊÇÎªÁË´¦Àí HTTP ÇëÇó°üÃ»ÓĞ½ÓÊÕÍêÕûµÄÇé¿ö£¬»¹ĞèÒª¼ÌĞø½ÓÊÕ
+	if (httpContext->gotAll())	// ä½¿ç”¨ if è¯­å¥ï¼Œæ˜¯ä¸ºäº†å¤„ç† HTTP è¯·æ±‚åŒ…æ²¡æœ‰æ¥æ”¶å®Œæ•´çš„æƒ…å†µï¼Œè¿˜éœ€è¦ç»§ç»­æ¥æ”¶
 	{
 		onRequest(conn, httpContext->request());
 		httpContext->reset();
 
-		// ·ÅÔÚ request Ö®ºó£¬¼õÉÙÏìÓ¦Ê±¼ä¶Ô connection µÄÉú´æÊ±¼ä²úÉúÓ°Ïì
-		// ÒòÎª Ç¿ÖÆ¶Ï¿ª²ÉÓÃµÄÊÇ shutdown£¬¶ø·Ç forceclose£¬ËùÒÔÔÊĞí write ÊÂ¼ş´¦ÀíÍê±Ï
+		// æ”¾åœ¨ request ä¹‹åï¼Œå‡å°‘å“åº”æ—¶é—´å¯¹ connection çš„ç”Ÿå­˜æ—¶é—´äº§ç”Ÿå½±å“
+		// å› ä¸º å¼ºåˆ¶æ–­å¼€é‡‡ç”¨çš„æ˜¯ shutdownï¼Œè€Œé forcecloseï¼Œæ‰€ä»¥å…è®¸ write äº‹ä»¶å¤„ç†å®Œæ¯•
 		WeakEntryPtr weakEntryPtr = std::any_cast<TcpConnectionContext>(
 			conn->getMutableContext())->weakEntryPtr_;
 		EntryPtr entryPtr = weakEntryPtr.lock();
@@ -121,17 +121,17 @@ void HttpServer::onMessage(const TcpConnectionPtr& conn, Buffer* buf, Timestamp 
 		{
 			timingWheelPtr_->push_backEntryPtr(std::move(entryPtr));
 		}
-		// ²»ĞèÒª¶Ô else ½øĞĞ´¦Àí
-		// ´¥·¢ else µÄÇé¿ö£¬ÊÇÔÚµ±Ç°Õı´¦Àí request Ê±£¬main-thread ÒÑ¾­¼ì²âµ½ xxx-conn Á¬½Ó³¬Ê±
-		// ½«ÆäÇ¿ĞĞ¶Ï¿ª£¬ÒòÎªÊ¹ÓÃ shutdown£¬ËùÒÔ»áµÈ´ı request Íê±Ïºó£¬ÔÚÏú»Ù TCPConnection
-		// ÕâÒ²¾Íµ¼ÖÂÁË Entry ÒÑ¾­±»Ïú»Ù£¬¶ø TCPConnection ÈÔÔÚ´æ»î
-		// PS: else µÄÇé¿ö´¥·¢µÄ¿ÉÄÜĞÔºÜµÍ£¬ÒòÎªÓĞ handleWriting ÊÂ¼şµÄ´¦Àí»úÖÆ
+		// ä¸éœ€è¦å¯¹ else è¿›è¡Œå¤„ç†
+		// è§¦å‘ else çš„æƒ…å†µï¼Œæ˜¯åœ¨å½“å‰æ­£å¤„ç† request æ—¶ï¼Œmain-thread å·²ç»æ£€æµ‹åˆ° xxx-conn è¿æ¥è¶…æ—¶
+		// å°†å…¶å¼ºè¡Œæ–­å¼€ï¼Œå› ä¸ºä½¿ç”¨ shutdownï¼Œæ‰€ä»¥ä¼šç­‰å¾… request å®Œæ¯•åï¼Œåœ¨é”€æ¯ TCPConnection
+		// è¿™ä¹Ÿå°±å¯¼è‡´äº† Entry å·²ç»è¢«é”€æ¯ï¼Œè€Œ TCPConnection ä»åœ¨å­˜æ´»
+		// PS: else çš„æƒ…å†µè§¦å‘çš„å¯èƒ½æ€§å¾ˆä½ï¼Œå› ä¸ºæœ‰ handleWriting äº‹ä»¶çš„å¤„ç†æœºåˆ¶
 	}
 
-	// Õâ¸ö»ØËİ×¢²á£¬·ÖÎªÁ½¸ö²¿·Ö£º
-	// 1. ½âÎö | 2. ÏìÓ¦
-	// <1> ÔÚ onMessage Íê³É
-	// <2> ÔÚ onRequest Íê³É -> Ö»ÊÇ½«º¯Êı²ğ¿ª£¬±ãÓÚ´úÂë×éÖ¯
+	// è¿™ä¸ªå›æº¯æ³¨å†Œï¼Œåˆ†ä¸ºä¸¤ä¸ªéƒ¨åˆ†ï¼š
+	// 1. è§£æ | 2. å“åº”
+	// <1> åœ¨ onMessage å®Œæˆ
+	// <2> åœ¨ onRequest å®Œæˆ -> åªæ˜¯å°†å‡½æ•°æ‹†å¼€ï¼Œä¾¿äºä»£ç ç»„ç»‡
 }
 
 void HttpServer::onRequest(const TcpConnectionPtr& conn, const HttpRequest& req)

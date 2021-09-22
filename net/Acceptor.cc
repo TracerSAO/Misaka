@@ -44,7 +44,7 @@ void Acceptor::setNewConnectionCallback(const NewConnectionCallback& newConnecti
 
 void Acceptor::handleRead()
 {
-	loop_->assertInLoopThread();	// 确保线程安全
+	loop_->assertInLoopThread();	// 纭繚绾跨▼瀹夊叏
 	InetAddress addr;
 	int connfd = acceptSocket_.accept(&addr);
 	if (0 <= connfd)
@@ -56,7 +56,7 @@ void Acceptor::handleRead()
 	}
 	else
 	{
-		// FIXME: 使用 LOG 替换
+		// FIXME: 浣跨敤 LOG 鏇挎崲
 		assert(0 > connfd && EMFILE == errno);
 		::close(idleFd_);
 		idleFd_ = ::accept(acceptSocket_.fd(), nullptr, nullptr);

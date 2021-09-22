@@ -13,6 +13,6 @@ void Timer::restart(Timestamp now)
 	}
 	else
 	{
-		expiration_ = Timestamp::invalid();		// Éú³ÉÎŞĞ§µÄ Ê±¼ä´Á£¬·½±ãºóĞøÒì³£ÅÅ²é
+		expiration_ = Timestamp::invalid();		// ç”Ÿæˆæ— æ•ˆçš„ æ—¶é—´æˆ³ï¼Œæ–¹ä¾¿åç»­å¼‚å¸¸æ’æŸ¥
 	}
 }

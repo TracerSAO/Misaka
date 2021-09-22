@@ -36,17 +36,17 @@ public:
 	string toIpPort() const;
 	uint16_t port() const;
 
-	// ÕâÀïÖ»ÊÇ½«¶ÔÖ¸ÕëÀàĞÍ½øĞĞ×ª»»£¬¼´Ê¹½« addr6_ Ìæ»»Îª adr_ ÒÀ¾É¿ÉĞĞ
-	// ×î¼ÑÔËÓÃ¼û toIp() AND toIpPort()
+	// è¿™é‡Œåªæ˜¯å°†å¯¹æŒ‡é’ˆç±»å‹è¿›è¡Œè½¬æ¢ï¼Œå³ä½¿å°† addr6_ æ›¿æ¢ä¸º adr_ ä¾æ—§å¯è¡Œ
+	// æœ€ä½³è¿ç”¨è§ toIp() AND toIpPort()
 	const struct sockaddr* getSockaddr() const { return sockets::sockaddr_cast(&addr6_); }
 	void setSocketAddrInet6(const struct sockaddr_in6 addr6) { addr6_ = addr6; }
 
-	// ·µ»Ø ipv4 µØÖ·µÄÍøÂç×Ö½ÚĞò
+	// è¿”å› ipv4 åœ°å€çš„ç½‘ç»œå­—èŠ‚åº
 	uint32_t ipv4NetEndian() const;
-	// ·µ»Ø ipv4 ¶Ë¿ÚµÄÍøÂç×Ö½ÚĞò
+	// è¿”å› ipv4 ç«¯å£çš„ç½‘ç»œå­—èŠ‚åº
 	uint16_t portNetEndian() const { return addr_.sin_port; }
 
-	// ·µ»Ø ipv6 ¶ÎÅ¸µÄÍøÂç×Ö½ÚĞò - Èç¹ûÉÏ²ãµ÷ÓÃÓĞĞèÇó£¬ÔÙ¼ÓÈë
+	// è¿”å› ipv6 æ®µé¸¥çš„ç½‘ç»œå­—èŠ‚åº - å¦‚æœä¸Šå±‚è°ƒç”¨æœ‰éœ€æ±‚ï¼Œå†åŠ å…¥
 	//uint16_t inet6PortNetEndian() const { return addr6_.sin6_port; }
 
 	static bool resolve(StringArg hostname, InetAddress* result);
@@ -65,11 +65,11 @@ private:
 }
 
 /**
-* ¸öÈË¸ĞÊÜ£ºmuduo ¹¹½¨µÄ InetAddress Ïà¹Ø½Ó¿ÚÓĞĞ©Ì«»ìÂÒÁË£¬ÎÒ·ÂÕÕ×ÅĞ´¶¼¿ì·Ö²»Çå¸÷¸ö½Ó¿ÚµÄÓÃ´¦
-*			¾ÍÎÒ¸öÈËÀ´Ëµ£¬×î»ìÂÒµÄ¿ÉÄÜ¾ÍÊÇÎªÊ²Ã´Ò»Ğ©½Ó¿ÚÖ»Ìá¹© IPv4 ¶ø²»Ìá¹© IPv6 °æµÄ£¬
-*			²¢ÇÒÃ÷Ã÷Ò»Ğ©ºÜÏàÏñµÄ½Ó¿Ú£¬ÎªÊ²Ã´ ipv4NetEndian() Ìá¹© assert ¶ÏÑÔ¼ì²é AF_INET£¬¶ø portNetEndian() È·²»Ìá¹©ÄØ£¿£¿£¿
-*			ÕæµÄÊÇ´óĞ´µÄÄ§ÂÒ¡£¡£
-* PS: Èç¹ûµ½ºóÃæ¹¹½¨ÉÏ²ã×é¼şÊ±£¬ÎÒÈÔÈô¾õµÃÌ«»ìÂÒÁË£¬ÄÇÕâ¸öÄ£¿é½«½øĞĞ Misaka »¯
+* ä¸ªäººæ„Ÿå—ï¼šmuduo æ„å»ºçš„ InetAddress ç›¸å…³æ¥å£æœ‰äº›å¤ªæ··ä¹±äº†ï¼Œæˆ‘ä»¿ç…§ç€å†™éƒ½å¿«åˆ†ä¸æ¸…å„ä¸ªæ¥å£çš„ç”¨å¤„
+*			å°±æˆ‘ä¸ªäººæ¥è¯´ï¼Œæœ€æ··ä¹±çš„å¯èƒ½å°±æ˜¯ä¸ºä»€ä¹ˆä¸€äº›æ¥å£åªæä¾› IPv4 è€Œä¸æä¾› IPv6 ç‰ˆçš„ï¼Œ
+*			å¹¶ä¸”æ˜æ˜ä¸€äº›å¾ˆç›¸åƒçš„æ¥å£ï¼Œä¸ºä»€ä¹ˆ ipv4NetEndian() æä¾› assert æ–­è¨€æ£€æŸ¥ AF_INETï¼Œè€Œ portNetEndian() ç¡®ä¸æä¾›å‘¢ï¼Ÿï¼Ÿï¼Ÿ
+*			çœŸçš„æ˜¯å¤§å†™çš„é­”ä¹±ã€‚ã€‚
+* PS: å¦‚æœåˆ°åé¢æ„å»ºä¸Šå±‚ç»„ä»¶æ—¶ï¼Œæˆ‘ä»è‹¥è§‰å¾—å¤ªæ··ä¹±äº†ï¼Œé‚£è¿™ä¸ªæ¨¡å—å°†è¿›è¡Œ Misaka åŒ–
 */
 
 #endif // !MISAKA_INETADDRESS_H

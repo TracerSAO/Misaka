@@ -63,7 +63,7 @@ private:
     typedef std::vector<Channel*> ChannelList;
 
     bool quit_;
-    bool looping_; /*atomic - ±íÊ¾¶Ô ta µÄÒ»ÇĞ²Ù×÷Ò»¶¨¶¼ÊÇÔ­×ÓµÄ*/
+    bool looping_; /*atomic - è¡¨ç¤ºå¯¹ ta çš„ä¸€åˆ‡æ“ä½œä¸€å®šéƒ½æ˜¯åŸå­çš„*/
     const pthread_t threadId_;
     bool callingPendingFunctor_; /*atomic*/
 

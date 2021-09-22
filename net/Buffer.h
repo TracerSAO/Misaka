@@ -164,7 +164,7 @@ public:
 		writerIndex_ -= len;
 	}
 
-	// ÒÔÏÂ±»×¢ÊÍµôµÄ function£¬Ö»ÓĞÔÚĞèÒªĞòÁĞ»¯µÄÇé¿ö²Å»áÓÃµ½£¬ËùÒÔÔİ²»ÊµÏÖ
+	// ä»¥ä¸‹è¢«æ³¨é‡Šæ‰çš„ functionï¼Œåªæœ‰åœ¨éœ€è¦åºåˆ—åŒ–çš„æƒ…å†µæ‰ä¼šç”¨åˆ°ï¼Œæ‰€ä»¥æš‚ä¸å®ç°
 	//void appendInt64(int64_t x);
 	//void appendInt32(int32_t x);
 	//void appendInt16(int16_t x);
@@ -197,7 +197,7 @@ public:
 		prepend(&val16, sizeof(int16_t));
 	}
 	void prependInt8(int8_t x)
-	{	// ´óĞ¡¶Ë×Ö½ÚĞòÎÊÌâ£¬Ö»´æÔÚÓÚ data-type size > 1 byte
+	{	// å¤§å°ç«¯å­—èŠ‚åºé—®é¢˜ï¼Œåªå­˜åœ¨äº data-type size > 1 byte
 		prepend(&x, sizeof(int8_t));
 	}
 
@@ -209,7 +209,7 @@ public:
 		std::copy(v, v + len, begin() + readerIndex_);
 	}
 
-	// ÔİÊ±Ã»ÓĞÊ²Ã´±È½ÏºÃµÄÌæ»»·½°¸
+	// æš‚æ—¶æ²¡æœ‰ä»€ä¹ˆæ¯”è¾ƒå¥½çš„æ›¿æ¢æ–¹æ¡ˆ
 	//void shrink(size_t reserve);
 
 	size_t internalCapacity() const { return buffer_.capacity(); }
@@ -220,7 +220,7 @@ private:
 	char* begin() { return buffer_.data(); }
 	const char* begin() const { return buffer_.data(); }
 
-	// Ö»ÄÜÍ¨¹ı ensureWritableByte() À´µ÷ÓÃ
+	// åªèƒ½é€šè¿‡ ensureWritableByte() æ¥è°ƒç”¨
 	void makeSpace(size_t len)
 	{
 		if (prependableBytes() + writableBytes() < kCheapPrepend + len)
@@ -229,8 +229,8 @@ private:
 		}
 		else
 		{
-			// makeSpace() ²»»á±»µ¥¶Àµ÷ÓÃ£¬ÄÜ½øÀ´£¬ËµÃ÷ writableBytes() < len
-			// ËùÒÔÄÜ½øµ½ else £¬ËµÃ÷ prependableBytes() != kCheapPrepend
+			// makeSpace() ä¸ä¼šè¢«å•ç‹¬è°ƒç”¨ï¼Œèƒ½è¿›æ¥ï¼Œè¯´æ˜ writableBytes() < len
+			// æ‰€ä»¥èƒ½è¿›åˆ° else ï¼Œè¯´æ˜ prependableBytes() != kCheapPrepend
 			assert(kCheapPrepend < prependableBytes());
 			size_t readablebytes = readableBytes();
 			std::copy(begin() + readerIndex_,
@@ -244,8 +244,8 @@ private:
 
 private:
 	std::vector<char> buffer_;
-	size_t readerIndex_;	// Ö¸Ïò×îºóÒ»¸ö readByte µÄÏÂÒ»Î» -> [)
-	size_t writerIndex_;	// Ö¸ÏòµÚÒ»¸ö writeByte
+	size_t readerIndex_;	// æŒ‡å‘æœ€åä¸€ä¸ª readByte çš„ä¸‹ä¸€ä½ -> [)
+	size_t writerIndex_;	// æŒ‡å‘ç¬¬ä¸€ä¸ª writeByte
 	
 	static const char kCRLF[];
 };

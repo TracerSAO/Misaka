@@ -28,7 +28,7 @@ struct timespec howMuchTimeFromNow(Timestamp when)
 {
 	int64_t microseconds = when.microSecondsSinceEpoch()
 		- Timestamp::now().microSecondsSinceEpoch();
-	if (100 > microseconds)		// ´¦Àí microseconds Îª¸ºµÄÇé¿ö£¬ÖÁÓÚÎªÊ²Ã´²»Îª 0£¬Ó¦¸ÃÊÇ muduo ¿¼ÂÇµ½¶¨Ê±Æ÷ĞÔÄÜµÄÒòËØ£¬×îºÃ²»Òª¶ÌÊ±¼äÔÙ´Î½øÈë timer reset
+	if (100 > microseconds)		// å¤„ç† microseconds ä¸ºè´Ÿçš„æƒ…å†µï¼Œè‡³äºä¸ºä»€ä¹ˆä¸ä¸º 0ï¼Œåº”è¯¥æ˜¯ muduo è€ƒè™‘åˆ°å®šæ—¶å™¨æ€§èƒ½çš„å› ç´ ï¼Œæœ€å¥½ä¸è¦çŸ­æ—¶é—´å†æ¬¡è¿›å…¥ timer reset
 	{
 		microseconds = 100;
 	}
@@ -102,7 +102,7 @@ TimerId TimerQueue::addTimer(TimerCallback cb,
 
 void TimerQueue::addTimerInLoop(Timer* timer)
 {
-	loop_->assertInLoopThread();	// ²»Ö§³Ö¿çÏß³Ì
+	loop_->assertInLoopThread();	// ä¸æ”¯æŒè·¨çº¿ç¨‹
 	bool earliestChanged = insert(timer);
 
 	if (earliestChanged)
@@ -140,7 +140,7 @@ void TimerQueue::handleRead()
 std::vector<TimerQueue::Entry> TimerQueue::getExpired(Timestamp now)
 {
 	loop_->assertInLoopThread();
-	Entry sentry(now, reinterpret_cast<Timer*>(UINTPTR_MAX));	// UINTPTR_MAX ×î´óÖ¸Õë£¬È·±£ËùÓĞ Timestamp ÏàÍ¬µÄ timer£¬Ò»¶¨»á±»¼ì²â³öÀ´
+	Entry sentry(now, reinterpret_cast<Timer*>(UINTPTR_MAX));	// UINTPTR_MAX æœ€å¤§æŒ‡é’ˆï¼Œç¡®ä¿æ‰€æœ‰ Timestamp ç›¸åŒçš„ timerï¼Œä¸€å®šä¼šè¢«æ£€æµ‹å‡ºæ¥
 	
 	std::vector<Entry> expired;
 	auto end = timers_.lower_bound(sentry);
