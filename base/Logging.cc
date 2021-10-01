@@ -40,7 +40,7 @@ const char* LogLevelName[static_cast<int>(Logger::LogLevel::NUM_LOG_LEVELS)] =
 	"FATAL "
 };
 
-// 我确实不认为，class T 可以在编译器计算出 string 长度
+// 我确实不认为，class T 可以在编译期计算出 string 长度
 // 但我认为 class T 是外部向 LOGSTREAM 输入数据的一个良好接口
 class T
 {
@@ -111,7 +111,7 @@ Logger::Impl::Impl(LogLevel level, int old_errno, const Logger::SourceFile& base
 	}
 }
 
-// 这里的设计，没有考虑时区，目前对系统时间的掌握稍有不足，暂且记下，后续再完善
+// !TODO: 这里的设计，没有考虑时区，目前对系统时间的掌握稍有不足，暂且记下，后续再完善
 void Logger::Impl::formatTime()
 {
 	int64_t microSecondsSinceEpoch = time_.microSecondsSinceEpoch();
