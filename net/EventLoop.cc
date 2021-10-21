@@ -20,7 +20,7 @@ using namespace net;
 namespace
 {
 
-    __thread EventLoop* t_loopInthisThread = 0; // 为什么要使用 0 ，而不是 nullptr ?
+    __thread EventLoop* t_loopInthisThread = nullptr;
 
     int createEventfd()
     {

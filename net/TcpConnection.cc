@@ -168,7 +168,7 @@ void TcpConnection::sendInLoop(const void* meg, size_t len)
 		else
 		{
 			nwrote = 0;
-			if (EWOULDBLOCK == errno)
+			if (EWOULDBLOCK != errno)
 			{
 				LOG_SYSERR << "TcpConnection::sendInLoop()";;
 				if (EPIPE == errno || ECONNRESET == errno)

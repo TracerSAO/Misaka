@@ -13,6 +13,10 @@ namespace Detail
 pid_t gettid()
 {
 	return static_cast<pid_t>(::syscall(SYS_gettid));
+	// 这里是 muduo 封装 thread 的一个核心，用于唯一表示 thread 的标识符
+	// 使用 ::syscall(SYS_gettid) 目的是获取，当前线程在运行时，Linux-kernel 为其分配的标示性等同于 “进程唯一标识符” 的 pid_t
+	// pid_t 会比 pthread_t 更好，原因就是 “pid_t 标识范围可跨进程 | pthread_t 标识范围只能在当前进程内，甚至不同进程内的不同线程会存在 pthread_t 冲突的情况”
+	// 最后，这一切的目的都是为：LOG 服务，让我们在程序 abort 后，检验“尸体”能够更轻松一点 ;)
 }
 
 void afterfork()
@@ -54,6 +58,7 @@ struct ThreadData
 
 	void runInThread()
 	{
+		// 1. 新线程诞生后的基础工作 —— “按照我们自己设计的 thread 模型” 对 Linux 创建的原生线程进行初始化工作
 		*tid_ = CurrentThread::tid();
 		tid_ = nullptr;
 		latch_->countDown();
@@ -62,6 +67,7 @@ struct ThreadData
 		CurrentThread::t_threadName = name_.empty() ? "MisakaThread" : name_.c_str();
 		::prctl(PR_SET_NAME, CurrentThread::t_threadName);
 
+		// 2. 初始化工作完毕，开始让 thread 从事 TA 的本质工作，运行调用者注册进来的 function
 		func_();	// 缺少异常捕获，为什么要在这里添加异常捕获，暂不清楚，muduo 中在这一块确实提供了这样的一种机制
 		CurrentThread::t_threadName = "finished";
 	}
@@ -133,7 +139,7 @@ void Thread::start()
 	{
 		started_ = false;
 		delete data;
-		assert(true == started_);	// 赞替 LOG
+		assert(true == started_);	// 暂替 LOG
 	}
 	else
 	{

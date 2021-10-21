@@ -1,5 +1,5 @@
-#ifndef MISAKAK_THREAD_H
-#define MISAKAK_THREAD_H
+#ifndef MISAKA_THREAD_H
+#define MISAKA_THREAD_H
 
 #include "Types.h"
 #include "Atomic.h"
@@ -22,7 +22,7 @@ public:
 	~Thread();
 
 	void start();
-	int join();		// return pthrad_join();
+	int join();		// return pthread_join();
 
 	bool started() const { return started_; }
 	bool joined() const { return joined_; }
@@ -47,4 +47,4 @@ private:
 
 }	// namespace Misaka
 
-#endif // !MISAKAK_THREAD_H
+#endif // !MISAKA_THREAD_H

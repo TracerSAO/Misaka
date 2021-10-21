@@ -158,7 +158,7 @@ public:
 		assert(writableBytes() >= len);
 		writerIndex_ += len;
 	}
-	void unwrite(size_t len)
+	void unWrite(size_t len)
 	{
 		assert(readableBytes() >= len);
 		writerIndex_ -= len;

@@ -115,7 +115,7 @@ void onRequest(const HttpRequest& req, HttpResponse* resp)
 	{
 		resp->setCloseConnection(true);
 		// 也可以试着增加一些 “失败宣言”，不过这是由 usr 提供，而非 Misaka 网络库的职责！
-		// 具体实现方式为：增加一个 function OR 设定一组 <HttpResponseStatuCode:失败宣言> 的映射
+		// 具体实现方式为：增加一个 function OR 设定一组 <HttpResponseStatusCode:失败宣言> 的映射
 	}
 
 	resp->addHeader("Server", "Arknights");

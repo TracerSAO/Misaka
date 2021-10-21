@@ -1,6 +1,10 @@
 {
     "cSpell.words": [
         "connfd",
-        "pcond"
+        "Epoller",
+        "nwrote",
+        "pcond",
+        "wakeupfd",
+        "Wtype"
     ]
 }
