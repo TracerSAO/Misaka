@@ -55,6 +55,11 @@ public:
 		connectionBuckets_.resize(bucketSize);
 	}
 
+	//	定时事件
+	//	How-to-use: HTTPServer 模块将其注册为 “循环定时事件”
+	//  Effect: interval 1 s，触发一次
+	//	Default-Action：插入新的容器元素
+	//	PS：可根据 HTTPServer 需求再 HTTPServer 模块中重新更改定时 interval
 	void onTimer()
 	{
 		// string str;
@@ -65,18 +70,22 @@ public:
 		// }
 		// LOG_INFO << "connectionBuckets: " << str;
 		
+		MutexLockGuard GUARD(mutex_);
 		connectionBuckets_.push_back(Bucket());
 	}
 
+	// How-to-use:	在 HttpServer 执行对 TCPConnection 的 Read/Write 操作时，附加直接此状态更新操作
+	// Effect:	为 TcpConnection 续命 ;)
+	// Default-Action: 想 circular_buffer 末尾的元素中插入代表链接的 Entry
 	void push_backEntryPtr(const EntryPtr& entryPtr)
 	{
-		MutexLockGuard lock(mutex_);
+		MutexLockGuard GUARD(mutex_);
 		connectionBuckets_.back().insert(entryPtr);
 	}
 
 	bool containsInBackBucket(const EntryPtr& entryPtr) const
 	{
-		MutexLockGuard lock(mutex_);
+		MutexLockGuard GUARD(mutex_);
 		return connectionBuckets_.back().find(entryPtr) !=
 			connectionBuckets_.back().end();
 	}

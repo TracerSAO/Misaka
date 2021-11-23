@@ -1,5 +1,5 @@
-#ifndef MISAKA_HTTPRSEPONSE_H
-#define MISAKA_HTTPRSEPONSE_H
+#ifndef MISAKA_HTTPRESPONSE_H
+#define MISAKA_HTTPRESPONSE_H
 
 #include "../base/copyable.h"
 #include "../base/Types.h"
@@ -37,7 +37,7 @@ public:
 	}
 
 	void setStatusCode(HttpStatusCode code)
-	{ statuCode_ = code; }
+	{ statusCode_ = code; }
 
 	// void setStatusMessage(const string& meg)
 	// { statuMessage_ = meg;}
@@ -66,7 +66,7 @@ public:
 	void appendToBuffer(Buffer*) const;
 
 private:
-	HttpStatusCode statuCode_;
+	HttpStatusCode statusCode_;
 	string version_;
 	// string statuMessage_;
 	bool closeconnection_;
@@ -76,8 +76,8 @@ private:
 	static std::map<HttpStatusCode, const char*> statusMessageCollect_;
 };
 
-}	// namesapce htp
+}	// namespace http
 }	// namespace net
 }	// namespace Misaka
 
-#endif // !MISAKA_HTTPRSEPONSE_H
+#endif // !MISAKA_HTTPRESPONSE_H

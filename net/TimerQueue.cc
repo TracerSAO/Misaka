@@ -98,6 +98,20 @@ TimerId TimerQueue::addTimer(TimerCallback cb,
 	loop_->runInLoop(std::bind(&TimerQueue::addTimerInLoop, this, timer));
 	// std::bind(&TimerQueue::addTimerInLoop, this, timer)
 	return TimerId(timer, timer->sequence());
+	// Q: 为什么会使用 runInLoop() 这安全的跨线程方式，来设置 Timer(定时器) 的添加？
+	// A: 向 TimerQueue 中添加 New Timer，是必须修改 TimerQueue 中的用于记录 Timer 的容器
+	// 		这样这个 Container 就成会变成竞争资源（因为竞争者不止一位呀 :P )
+	//		如果不采用什么保护措施的话，那么 TimerQueue 就是线程不安全的！！！
+	//		目前的方案中，我们可使用加锁的方式 OR 目前使用这种安全的跨线程参数传递方式
+	//		性能分析：
+	//		前者，会使用 “锁”，lock/unlock 并不会造成性能瓶颈，而多个线程对锁的争夺会造成非常严重的性能损耗！！！！
+	//			所以这种方案，很显然不过关。现在服务端编程，在能不是用锁的地方都会不去使用锁，而且 muduo 网络库在设计之初，就是要规避掉加锁带来的负面影响；
+	//		后者，也是使用到锁，但是这种方案，各个线程对锁的占有时间绝对的短！！！！！！！
+	//			这也就是保证了临界区不会很长，临界区越短，锁争用所带来的性能损失越少。
+	//			保证方式，就是将其他线程需要注册的函数，作为一种特殊的参数，通过 Linux 内核提供的事件触发文件描述符，
+	//			来将操作在借助 IO 多路复用的帮助下，带入到 TimerQueue 所在的线程汇中，实现了 “多线程向单线程” 的转换
+	//			最后，只要在这个单线程中，线性的处理容器中所存储的待注册函数即可！
+	//			干得漂亮 ο(=•ω＜=)ρ⌒☆
 }
 
 void TimerQueue::addTimerInLoop(Timer* timer)
